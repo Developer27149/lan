@@ -319,6 +319,11 @@
   resolved "https://registry.npmmirror.com/@types/har-format/download/@types/har-format-1.2.8.tgz#e6908b76d4c88be3db642846bb8b455f0bfb1c4e"
   integrity sha1-5pCLdtTIi+PbZChGu4tFXwv7HE4=
 
+"@types/lodash@^4.14.178":
+  version "4.14.178"
+  resolved "https://registry.npmmirror.com/@types/lodash/download/@types/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
+  integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
+
 "@types/prop-types@*":
   version "15.7.4"
   resolved "https://registry.npmmirror.com/@types/prop-types/download/@types/prop-types-15.7.4.tgz?cache=0&sync_timestamp=1637270164807&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fprop-types%2Fdownload%2F%40types%2Fprop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"

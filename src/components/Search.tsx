@@ -1,34 +1,52 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useSearch } from "../hooks/useSearch";
+import { keyword2site } from "../libs/index";
+import { keywordType } from "../types/index";
+import EngineIcon from "./EngineIcon";
 
 export default function Search() {
-  const inpRef = useRef<HTMLInputElement>(null);
-  const { EngineIcon, handleEngineKeyword, curKeyword } = useSearch();
+  const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } =
+    useSearch();
+
   const [value, setValue] = useState("");
+
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     const v = e.currentTarget.value;
-    if (v !== "" && !new RegExp(`/^${curKeyword} /`).test(v)) {
-      const k = v[0] as "g" | "z" | "b";
-      handleEngineKeyword(k);
+    if (v.length >= 2 && /^[gbz][gh]{0,1} /.test(v) && !/^g /.test(v)) {
+      const spaceIdx = v.indexOf(" ");
+      const key = v.slice(0, spaceIdx) as keywordType;
+      if (key !== curKeyword && spaceIdx !== -1) {
+        setCurKeyword(key);
+        setValue(v.slice(spaceIdx + 1));
+      } else {
+        setValue(v);
+      }
     } else {
       setValue(v);
     }
   };
-  useEffect(() => {
-    if (inpRef.current) {
-      inpRef.current.focus();
+
+  const handlePressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      window.open(
+        `https://www.${keyword2site[curKeyword]}.com/search?q=${value}`
+      );
+      setValue("");
     }
-  }, []);
+  };
+
   return (
-    <div className="search-box">
+    <div className="search-box" data-show={visibility}>
       <input
         type="text"
         ref={inpRef}
         value={value}
+        id="search"
         onChange={handleInputChange}
+        onKeyPress={handlePressEnter}
       />
-      <span className="icon">
-        <EngineIcon />
+      <span className="icon" style={{ color: iconColor }}>
+        <EngineIcon keyword={curKeyword} />
       </span>
     </div>
   );

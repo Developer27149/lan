@@ -9,22 +9,55 @@ main
   justify-content: center
   align-items: center
   background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)
+  background-size: cover
+  background-repeat: no-repeat
 
   input
-    padding: 8px 10px
-    padding-right: 24px
+    font-size: 14px
+    margin: 16px
+    padding: 14px 18px
+    padding-right: 26px
+    padding-left: 20px
     border-radius: 4px
     outline: none
     border: none
     width: min(400px, 90vw)
+    border-radius: 24px
 
   .search-box
     display: flex
     align-items: center
     justify-content: center
+    margin-bottom: 300px
     .icon
       position: relative
-      left: -24px
+      left: -50px
       top: 2px
-      font-size: 16px
-      color: tomato
+      font-size: 20px
+
+  .search-box[data-show="hidden"]
+    visibility: hidden
+
+@keyframes rotateImg
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(720deg)
+
+.update
+  position: fixed
+  bottom: 1rem
+  left: 1rem
+  margin: 4px
+  border: none
+  outline: none
+  background: transparent
+  cursor: pointer
+  opacity: 0.5
+  transition: all 0.6s ease-in-out
+  transform: scale(0.7)
+  &:hover
+    opacity: 1
+    transform: scale(1)
+  &[data-loading="true"]
+    animation: rotateImg 2s infinite linear
