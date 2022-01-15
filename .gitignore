@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 # build folder
 lan_crx/
+lan_crx
 ### Node ###
 # Logs
 logs
