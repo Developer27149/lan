@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useSearch } from "../hooks/useSearch";
-import { keyword2site } from "../libs/index";
+import { keyword2site } from "../utils/index";
 import { keywordType } from "../types/index";
 import EngineIcon from "./EngineIcon";
 

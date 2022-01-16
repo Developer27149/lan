@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import img from "../../public/icons/64.svg";
+import { requestNewestWallpaper } from "../utils/unsplash";
 
 export default function ModifyWallpaperBtn() {
-  const [animate, setAnimate] = useState(false);
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setAnimate(true);
-    setTimeout(() => {
-      setAnimate(false);
-    }, 2010);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsLoading(true);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 2010);
+    const result = await requestNewestWallpaper();
+    if (result !== true) {
+      console.log(result);
+    } else {
+      console.log(result);
+
+      // location.reload();
+    }
+    setIsLoading(false);
   };
   return (
     <button
       className="update"
       onClick={handleClick}
-      style={
-        animate
-          ? {
-              // animation: "rotateImg 2s infinite linear",
-              // animationIterationCount: "infinite",
-            }
-          : undefined
-      }
+      data-loading={isLoading.toString()}
     >
-      <img src={img} />
+      <img src="icons/64.svg" />
     </button>
   );
 }
