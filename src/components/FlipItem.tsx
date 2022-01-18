@@ -19,15 +19,19 @@ export default React.forwardRef<HTMLDivElement>((props, ref) => {
     }, 500);
   }, []);
   return (
-    <div ref={ref} className="clock_item">
-      <h1>{numBack}</h1>
+    <div ref={ref} className="clock_item digit" data-before="0" data-after="1">
+      {/* <h1>{numBack}</h1>
       <div className="top">
         <h1 data-main="true">{~~(num + 0.5)}</h1>
         <div className="h"></div>
-      </div>
+      </div> */}
       {/* <div className="bottom">
         <h1 data-main="true">{~~(num + 0.5)}</h1>
       </div> */}
+      <div className="card">
+        <div className="card-face card-face-front">0</div>
+        <div className="card-face card-face-back">1</div>
+      </div>
     </div>
   );
 });

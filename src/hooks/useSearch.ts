@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { keywordType } from "../types/index";
 import _ from "lodash";
-import { getRandomColor } from "../libs/index";
+import { getRandomColor } from "../utils/index";
 
 export const useSearch = () => {
   const [curKeyword, setCurKeyword] = useState<keywordType>("gg");

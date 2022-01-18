@@ -12,6 +12,7 @@ function saveToStorage(obj) {
 chrome.runtime.onInstalled.addListener(async () => {
   saveToStorage({ engine: "gg" });
   saveToStorage({ wallpaper_page: 1 });
+  saveToStorage({ icon_size: "sm" });
   try {
     const res = await fetch(url);
     const jsonData = await res.json();
