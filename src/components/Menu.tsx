@@ -2,7 +2,6 @@ import { FcSettings } from "react-icons/fc";
 import { CgMenuGridO } from "react-icons/cg";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { useMenu } from "../hooks/useMenu";
-import ClockContainer from "./ClockContainer";
 import { useState } from "react";
 import { handleDownloadCurWallpaper } from "../utils/index";
 import { useAppContext } from "../context/index.js";
@@ -41,7 +40,6 @@ export default function Menu() {
           </div>
         )}
       </div>
-      {showClock && <ClockContainer handleSwitch={handleSwitchShowClock} />}
     </>
   );
 }
