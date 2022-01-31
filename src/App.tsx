@@ -15,12 +15,17 @@ export default function App(props: IProps) {
   const [state, dispatch] = useReducer(appReducer, {
     wallpaper,
     iconSize: icon_size,
+    showClock: false,
   });
   return (
     <AppContextProvider value={{ state, dispatch }}>
       <Home />
-      <ModifyWallpaperBtn />
-      <Menu />
+      {!state.showClock && (
+        <>
+          <ModifyWallpaperBtn />
+          <Menu />
+        </>
+      )}
     </AppContextProvider>
   );
 }

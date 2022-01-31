@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { DiBingSmall } from "react-icons/di";
 import { RiZhihuFill } from "react-icons/ri";
 import { VscGithubAlt } from "react-icons/vsc";
+import { FiYoutube } from "react-icons/fi";
 import { keywordType } from "../types/index";
 
 export default React.memo(function EngineIcon({
@@ -13,5 +14,6 @@ export default React.memo(function EngineIcon({
   if (keyword === "b") return <DiBingSmall />;
   if (keyword === "z") return <RiZhihuFill />;
   if (keyword === "gh") return <VscGithubAlt />;
+  if (keyword === "y") return <FiYoutube />;
   return <FcGoogle />;
 });

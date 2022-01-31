@@ -4,6 +4,7 @@ import { IState, IAction } from "./types";
 export const initState = {
   iconSize: "sm" as iconSize,
   wallpaper: "",
+  showClock: false,
 };
 
 export const AppContext = createContext<{

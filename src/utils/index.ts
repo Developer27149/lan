@@ -14,6 +14,7 @@ const keyword2site = {
   z: "zhihu",
   b: "bing",
   gh: "github",
+  y: "youtube",
 };
 
 const colors = ["#0f95b0", "#2c9678", "#fb8b05", "#2e317c"];
@@ -31,7 +32,6 @@ const getObjFromStorage = async (
   key: string
 ): Promise<{ [key: string]: any } | null> => {
   const res = await chrome.storage.local.get(key);
-  console.log("got res is: ", res);
   if (res) {
     return res;
   }

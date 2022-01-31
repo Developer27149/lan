@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useAppContext } from "../context/index.js";
 
 export const useMenu = () => {
-  const [showClock, setShowClock] = useState(!false);
-  const handleSwitchShowClock = () => setShowClock(!showClock);
-  return { showClock, handleSwitchShowClock };
+  const { state, dispatch } = useAppContext();
+  const handleSwitchShowClock = () =>
+    dispatch({
+      type: "clock",
+      payload: !state.showClock,
+    });
+  return { handleSwitchShowClock };
 };

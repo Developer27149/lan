@@ -9,8 +9,7 @@ import { useAppContext } from "../context/index.js";
 export default function Menu() {
   const { state } = useAppContext();
   const [showMenu, setShowMenu] = useState(false);
-  const { showClock, handleSwitchShowClock } = useMenu();
-  console.log(state);
+  const { handleSwitchShowClock } = useMenu();
 
   return (
     <>

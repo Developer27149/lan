@@ -12,9 +12,10 @@ export default function Search() {
 
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     const v = e.currentTarget.value;
-    if (v.length >= 2 && /^[gbz][gh]{0,1} /.test(v) && !/^g /.test(v)) {
+    if (v.length >= 2 && /^[gbzy][gh]{0,1} /.test(v) && !/^g /.test(v)) {
       const spaceIdx = v.indexOf(" ");
       const key = v.slice(0, spaceIdx) as keywordType;
+
       if (key !== curKeyword && spaceIdx !== -1) {
         setCurKeyword(key);
         setValue(v.slice(spaceIdx + 1));

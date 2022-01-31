@@ -26,7 +26,6 @@ const requestNewestWallpaper = async () => {
         raw: string;
       };
     }[];
-    console.log(arr);
 
     if (arr.length === 0) throw new Error("Sources not found!");
     const target = arr.find((i) => !ids.includes(i.id));

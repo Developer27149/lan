@@ -13,6 +13,11 @@ export const appReducer = (state: IState, action: IAction) => {
         ...state,
         wallpaper: payload,
       };
+    case "clock":
+      return {
+        ...state,
+        showClock: payload,
+      };
     default:
       return state;
   }
