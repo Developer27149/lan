@@ -1,9 +1,11 @@
+import { saveToStorage } from "../utils/index.js";
 import { IAction, IState } from "./types";
 
 export const appReducer = (state: IState, action: IAction) => {
   const { type, payload } = action;
   switch (type) {
     case "iconSize":
+      saveToStorage({ icon_size: payload });
       return {
         ...state,
         iconSize: payload,
@@ -17,6 +19,12 @@ export const appReducer = (state: IState, action: IAction) => {
       return {
         ...state,
         showClock: payload,
+      };
+    case "tomato":
+      saveToStorage({ tomato_seconds: payload });
+      return {
+        ...state,
+        tomatoSeconds: payload,
       };
     default:
       return state;

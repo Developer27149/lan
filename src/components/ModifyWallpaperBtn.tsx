@@ -21,6 +21,7 @@ export default function ModifyWallpaperBtn() {
       className="update"
       onClick={handleClick}
       data-loading={isLoading.toString()}
+      data-size={state.iconSize}
     >
       <img src="icons/64.svg" />
     </button>

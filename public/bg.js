@@ -13,6 +13,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   saveToStorage({ engine: "gg" });
   saveToStorage({ wallpaper_page: 1 });
   saveToStorage({ icon_size: "sm" });
+  saveToStorage({ tomato_seconds: 60 });
   try {
     const res = await fetch(url);
     const jsonData = await res.json();

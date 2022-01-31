@@ -5,6 +5,7 @@ export const initState = {
   iconSize: "sm" as iconSize,
   wallpaper: "",
   showClock: false,
+  tomatoSeconds: 60,
 };
 
 export const AppContext = createContext<{

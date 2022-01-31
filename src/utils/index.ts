@@ -65,6 +65,14 @@ const handleDownloadCurWallpaper = async () => {
   chrome.downloads.download({ url: res?.wallpaper });
 };
 
+const formatTomatoSeconds = (count: number) => {
+  const minutes = ~~(count / 60);
+  const seconds = count % 60;
+  return `${minutes > 9 ? minutes : `0${minutes}`}:${
+    seconds > 9 ? seconds : `0${seconds}`
+  }`;
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -75,4 +83,5 @@ export {
   saveWallpaperBase64FromUrl,
   clearItemFromStorage,
   handleDownloadCurWallpaper,
+  formatTomatoSeconds,
 };

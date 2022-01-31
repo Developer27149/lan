@@ -8,14 +8,17 @@ import { iconSize } from "./types/index";
 const promiseArr = [
   getObjFromStorage("wallpaper"),
   getObjFromStorage("icon_size"),
+  getObjFromStorage("tomato_seconds"),
 ];
 Promise.all(promiseArr).then((props: any[]) => {
-  const [wallpaper, icon_size] = props;
+  const [wallpaper, icon_size, tomato_seconds] = props;
+
   ReactDOM.render(
     <React.StrictMode>
       <App
         wallpaper={wallpaper.wallpaper}
         icon_size={icon_size.icon_size as iconSize}
+        tomatoSeconds={tomato_seconds.tomato_seconds}
       />
     </React.StrictMode>,
     document.getElementById("root")

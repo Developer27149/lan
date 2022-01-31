@@ -5,11 +5,13 @@ import { useMenu } from "../hooks/useMenu";
 import { useState } from "react";
 import { handleDownloadCurWallpaper } from "../utils/index";
 import { useAppContext } from "../context/index.js";
+import Settings from "./Settings";
 
 export default function Menu() {
   const { state } = useAppContext();
   const [showMenu, setShowMenu] = useState(false);
-  const { handleSwitchShowClock } = useMenu();
+  const { handleSwitchShowClock, handleSwitchShowSetting, showSetting } =
+    useMenu();
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function Menu() {
             <div className="rest" onClick={handleSwitchShowClock}>
               <img src="icons/rest_tomato.svg" />
             </div>
-            <div className="setting">
+            <div className="setting" onClick={handleSwitchShowSetting}>
               <FcSettings />
             </div>
             <div onClick={() => setShowMenu(!showMenu)}>
@@ -39,6 +41,7 @@ export default function Menu() {
           </div>
         )}
       </div>
+      {showSetting && <Settings />}
     </>
   );
 }

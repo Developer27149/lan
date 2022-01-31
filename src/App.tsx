@@ -8,12 +8,14 @@ import { iconSize } from "./types/index";
 interface IProps {
   wallpaper: string;
   icon_size: iconSize;
+  tomatoSeconds: number;
 }
 
 export default function App(props: IProps) {
-  const { wallpaper, icon_size } = props;
+  const { wallpaper, icon_size, tomatoSeconds } = props;
   const [state, dispatch] = useReducer(appReducer, {
     wallpaper,
+    tomatoSeconds,
     iconSize: icon_size,
     showClock: false,
   });

@@ -1,0 +1,36 @@
+@keyframes hidden
+  0%
+    opacity: 0.7
+    transform: scale(1)
+  50%
+    opacity: 0.1 
+    transform: scale(0.6)
+  0%
+    opacity: 0.7
+    transform: scale(1)
+
+.clock-container
+  font-size: 5rem
+  font-family: "SanFrancisco"
+  color: #eee
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  font-weight: bolder
+  &[data-size="sm"]
+    font-size: 6rem
+  &[data-size="md"]
+    font-size: 7rem
+  &[data-size="lg"]
+    font-size: 8rem
+  .count
+    min-width: 300px
+  .info
+    font-size: 3rem
+    margin: 3rem
+  .hidden
+    font-size: 2rem
+    margin-top: 3rem
+    cursor: pointer
+    animation: hidden 4s infinite linear
