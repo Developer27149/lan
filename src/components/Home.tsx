@@ -5,7 +5,6 @@ import TomatoTime from "./TomatoTime";
 
 export default function Home() {
   const { state } = useAppContext();
-  console.log(state);
 
   const bgImgUrl = useMemo(() => {
     return {

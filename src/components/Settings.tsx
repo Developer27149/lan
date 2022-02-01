@@ -1,9 +1,12 @@
 import { useAppContext } from "../context/index.js";
 import "../style/settings.sass";
 import { iconSize } from "../types/index.js";
+import Info from "./Info";
 import Slider from "./Slider";
-
-export default function Settings() {
+interface IProps {
+  handleSwitchShowSetting: () => void;
+}
+export default function Settings({ handleSwitchShowSetting }: IProps) {
   const { state, dispatch } = useAppContext();
   const iconSizes: iconSize[] = ["sm", "md", "lg"];
   const handleModifyIconSize = (key: iconSize) => {
@@ -15,10 +18,13 @@ export default function Settings() {
     lg: "大",
   };
   return (
-    <div className="settings-container">
-      <div className="settings">
+    <div className="settings-container" onClick={handleSwitchShowSetting}>
+      <div
+        className="settings"
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+      >
         <div className="item">
-          <span className="text">字体大小</span>
+          <span className="text">图标大小</span>
           {iconSizes.map((size) => (
             <span
               className={
@@ -32,9 +38,10 @@ export default function Settings() {
           ))}
         </div>
         <div className="item">
-          <span className="text">小憩时间(分钟)</span>
+          <span className="text">小憩</span>
           <Slider value={state.tomatoSeconds} />
         </div>
+        <Info />
       </div>
     </div>
   );

@@ -41,7 +41,9 @@ export default function Menu() {
           </div>
         )}
       </div>
-      {showSetting && <Settings />}
+      {showSetting && (
+        <Settings handleSwitchShowSetting={handleSwitchShowSetting} />
+      )}
     </>
   );
 }
