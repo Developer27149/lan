@@ -1,6 +1,7 @@
 import { useAppContext } from "../context/index.js";
 import "../style/settings.sass";
 import { iconSize } from "../types/index.js";
+import Slider from "./Slider";
 
 export default function Settings() {
   const { state, dispatch } = useAppContext();
@@ -29,6 +30,10 @@ export default function Settings() {
               {mapObj[size]}
             </span>
           ))}
+        </div>
+        <div className="item">
+          <span className="text">小憩时间(分钟)</span>
+          <Slider value={state.tomatoSeconds} />
         </div>
       </div>
     </div>
