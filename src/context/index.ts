@@ -1,11 +1,13 @@
 import React, { createContext, useContext } from "react";
-import { iconSize } from "../types/index";
+import { iconSize, openTypeStr } from "../types/index";
 import { IState, IAction } from "./types";
+
 export const initState = {
   iconSize: "sm" as iconSize,
   wallpaper: "",
   showClock: false,
   tomatoSeconds: 60,
+  openType: "新页面" as openTypeStr,
 };
 
 export const AppContext = createContext<{
