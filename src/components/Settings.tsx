@@ -41,6 +41,24 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
           <span className="text">小憩</span>
           <Slider value={state.tomatoSeconds} />
         </div>
+        <div className="item">
+          <span className="text">新页面打开方式</span>
+          {["新页面", "当前页"].map((typeString) => (
+            <span
+              className={
+                state.openType === typeString
+                  ? "size-option active"
+                  : "size-option"
+              }
+              key={typeString}
+              onClick={() =>
+                dispatch({ type: "openType", payload: typeString })
+              }
+            >
+              {typeString}
+            </span>
+          ))}
+        </div>
         <Info />
       </div>
     </div>

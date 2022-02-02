@@ -4,6 +4,7 @@ import EngineIcon from "./EngineIcon";
 import "../style/info.sass";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { GrGithub, GrTwitter } from "react-icons/gr";
+import { AiOutlineWechat } from "react-icons/ai";
 
 export default React.memo(function Info() {
   const keywords = ["y", "gg", "gh", "b", "z"];
@@ -35,11 +36,17 @@ export default React.memo(function Info() {
         </span>
         <p className="or">🤔 &nbsp; or</p>
         <div className="links">
-          <a href="https://github.com/youyiqin">
+          <a target="_blank" href="https://github.com/youyiqin/lan">
             <GrGithub />
           </a>
-          <a href="https://twitter.com/miaocai0">
+          <a target="_blank" href="https://twitter.com/miaocai0">
             <GrTwitter />
+          </a>
+          <a
+            target="_blank"
+            href="https://avatars.githubusercontent.com/u/23721611?s=400&u=81b71a625223490a477903d8154db4b64caa4c54&v=4"
+          >
+            <AiOutlineWechat />
           </a>
         </div>
       </div>

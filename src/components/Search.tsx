@@ -3,8 +3,11 @@ import { useSearch } from "../hooks/useSearch";
 import { keyword2site } from "../utils/index";
 import { keywordType } from "../types/index";
 import EngineIcon from "./EngineIcon";
+import { useAppContext } from "../context/index.js";
 
 export default function Search() {
+  const { state } = useAppContext();
+
   const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } =
     useSearch();
 
@@ -30,7 +33,8 @@ export default function Search() {
   const handlePressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       window.open(
-        `https://www.${keyword2site[curKeyword]}.com/search?q=${value}`
+        `https://www.${keyword2site[curKeyword]}.com/search?q=${value}`,
+        state.openType === "当前页" ? "_top" : "_blank"
       );
       setValue("");
     }

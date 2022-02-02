@@ -1,3 +1,10 @@
+@keyframes hidden-from-right
+  0%
+    right: -500px
+  100%
+    right: 0
+
+
 .settings-container
   position: fixed
   right: 0
@@ -7,12 +14,15 @@
   height: 100vh
   z-index: 999  
   .settings
+    animation: hidden-from-right 0.7s ease
+    border-left: 1px solid #33333361
     font-size: 14px
     color: #0e0e0e
     // backdrop-filter: blur(10px)
     background-color: #fff
     width: min(100vw, 500px)    
     height: 100vh
+    position: relative
     margin: 0 0 0 auto
     padding: 1rem
     .item
@@ -28,7 +38,7 @@
         color: #1c22daf3
         cursor: pointer
         text-align: center 
-        width: 1.5rem
+        min-width: 1.5rem
         height: 1.5rem
         line-height: 1.5rem
         margin: 0 12px

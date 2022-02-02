@@ -26,6 +26,12 @@ export const appReducer = (state: IState, action: IAction) => {
         ...state,
         tomatoSeconds: payload,
       };
+    case "openType":
+      saveToStorage({ open_type: payload });
+      return {
+        ...state,
+        openType: payload,
+      };
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useMenu = () => {
   const { state, dispatch } = useAppContext();
-  const [showSetting, setShowSetting] = useState(true);
+  const [showSetting, setShowSetting] = useState(false);
   const handleSwitchShowSetting = () => setShowSetting(!showSetting);
   const handleSwitchShowClock = () =>
     dispatch({

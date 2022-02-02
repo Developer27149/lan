@@ -4,17 +4,19 @@ import Menu from "./components/Menu";
 import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
 import { AppContextProvider } from "./context/index";
 import { appReducer } from "./context/reducer";
-import { iconSize } from "./types/index";
+import { iconSize, openTypeStr } from "./types/index";
 interface IProps {
   wallpaper: string;
   icon_size: iconSize;
   tomatoSeconds: number;
+  openType: openTypeStr;
 }
 
 export default function App(props: IProps) {
-  const { wallpaper, icon_size, tomatoSeconds } = props;
+  const { wallpaper, icon_size, tomatoSeconds, openType } = props;
   const [state, dispatch] = useReducer(appReducer, {
     wallpaper,
+    openType,
     tomatoSeconds,
     iconSize: icon_size,
     showClock: false,

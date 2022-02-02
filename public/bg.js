@@ -14,6 +14,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   saveToStorage({ wallpaper_page: 1 });
   saveToStorage({ icon_size: "sm" });
   saveToStorage({ tomato_seconds: 60 });
+  saveToStorage({ open_type: "新页面" });
   try {
     const res = await fetch(url);
     const jsonData = await res.json();
