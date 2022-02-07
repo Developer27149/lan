@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { iconSize, openTypeStr } from "../types/index";
+import { iconSize, keywordType, openTypeStr } from "../types/index";
 import { IState, IAction } from "./types";
 
 export const initState = {
@@ -9,6 +9,7 @@ export const initState = {
   tomatoSeconds: 60,
   openType: "新页面" as openTypeStr,
   showCurClock: false,
+  engine: "gg" as keywordType,
 };
 
 export const AppContext = createContext<{
