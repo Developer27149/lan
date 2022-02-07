@@ -37,6 +37,11 @@ export const appReducer = (state: IState, action: IAction) => {
         ...state,
         openType: payload,
       };
+    case "engine":
+      return {
+        ...state,
+        engine: payload,
+      };
     default:
       return state;
   }

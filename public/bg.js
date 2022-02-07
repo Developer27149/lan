@@ -19,7 +19,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   try {
     const res = await fetch(url);
     const jsonData = await res.json();
-    console.log(jsonData);
     const { id, urls } = jsonData[0];
     // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
     saveToStorage({ historyIds: id });

@@ -8,8 +8,7 @@ import { useAppContext } from "../context/index.js";
 export default function Search() {
   const { state } = useAppContext();
 
-  const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } =
-    useSearch();
+  const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } = useSearch(state.engine);
 
   const [value, setValue] = useState("");
 

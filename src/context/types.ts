@@ -1,7 +1,7 @@
-import { iconSize, openTypeStr } from "../types/index";
+import { iconSize, keywordType, openTypeStr } from "../types/index";
 
 export interface IAction {
-  type: "iconSize" | "wallpaper" | "clock" | "tomato" | "openType" | "curClock";
+  type: "iconSize" | "wallpaper" | "clock" | "tomato" | "openType" | "curClock" | "engine";
   payload: any;
 }
 
@@ -12,6 +12,7 @@ export interface IState {
   tomatoSeconds: number;
   openType: openTypeStr;
   showCurClock: boolean;
+  engine: keywordType;
 }
 
 export type AppContext = {

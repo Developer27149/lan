@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { keywordType } from "../types/index";
 import _ from "lodash";
-import { getRandomColor } from "../utils/index";
+import { getObjFromStorage, getRandomColor, saveToStorage } from "../utils/index";
 
-export const useSearch = () => {
-  const [curKeyword, setCurKeyword] = useState<keywordType>("gg");
+export const useSearch = (engineType: keywordType) => {
+  const [curKeyword, setCurKeyword] = useState<keywordType>(engineType);
   const [visibility, setVisibility] = useState("hidden");
   const [iconColor, setIconColor] = useState("purple");
   const inpRef = useRef<HTMLInputElement>(null);
@@ -13,6 +13,9 @@ export const useSearch = () => {
       inpRef.current.focus();
     }
   }, []);
+  useEffect(() => {
+    saveToStorage({ engine: curKeyword });
+  }, [curKeyword]);
 
   useEffect(() => {
     setIconColor(getRandomColor());
@@ -21,8 +24,8 @@ export const useSearch = () => {
   useEffect(() => {
     // init keyword
     (async () => {
-      const res = await chrome.storage.local.get("engine");
-      setCurKeyword(res.engine);
+      const res = await getObjFromStorage("engine");
+      setCurKeyword(res?.engine);
     })();
     // init search box visibility attr
     let id = 0;
@@ -37,7 +40,6 @@ export const useSearch = () => {
       }, 10000);
     }, 50);
     const handleKeepType = _.debounce(() => {
-      // console.log("typing!!!");
       clearTimeout(id);
       setVisibility("visible");
     }, 50);

@@ -11,10 +11,10 @@ const promiseArr = [
   getObjFromStorage("tomato_seconds"),
   getObjFromStorage("open_type"),
   getObjFromStorage("show_cur_clock"),
+  getObjFromStorage("engine"),
 ];
 Promise.all(promiseArr).then((props: any[]) => {
-  const [wallpaper, icon_size, tomato_seconds, open_type, show_cur_clock] =
-    props;
+  const [wallpaper, icon_size, tomato_seconds, open_type, show_cur_clock, engine] = props;
 
   ReactDOM.render(
     <React.StrictMode>
@@ -24,6 +24,7 @@ Promise.all(promiseArr).then((props: any[]) => {
         tomatoSeconds={tomato_seconds.tomato_seconds}
         openType={open_type.open_type}
         showCurClock={show_cur_clock.show_cur_clock}
+        engine={engine.engine}
       />
     </React.StrictMode>,
     document.getElementById("root")
