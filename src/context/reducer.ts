@@ -20,6 +20,11 @@ export const appReducer = (state: IState, action: IAction) => {
         ...state,
         showClock: payload,
       };
+    case "curClock":
+      return {
+        ...state,
+        showCurClock: payload,
+      };
     case "tomato":
       saveToStorage({ tomato_seconds: payload });
       return {

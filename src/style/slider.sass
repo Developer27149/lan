@@ -1,20 +1,26 @@
-.slider
-  cursor: pointer
-  height: 8px
-  background-color: #d5e3e9
-  border-radius: 8px
-  width: 200px
-  &::before
-    content: ""
-    display: block
-    position: relative
-    left: 0
-    top: 0
-    background-color: blue
+.slider-container
+  display: flex
+  align-items: center
+  justify-content: end
+  flex-grow: 1
+  .slider
+    cursor: pointer
     height: 8px
-    width: var(--v)
+    background-color: #d5e3e9
     border-radius: 8px
+    width: 200px
+    &::before
+      content: ""
+      display: block
+      position: relative
+      left: 0
+      top: 0
+      background-color: blue
+      height: 8px
+      width: var(--v)
+      border-radius: 8px
 
-.time-text
-  color: #1c22daf3
-  margin-left: 10px
+  .time-text
+    color: #333
+    margin-left: 10px
+    min-width: 4rem

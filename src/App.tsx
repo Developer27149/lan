@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import Clock from "./components/Clock";
 import Home from "./components/Home";
 import Menu from "./components/Menu";
 import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
@@ -10,13 +11,16 @@ interface IProps {
   icon_size: iconSize;
   tomatoSeconds: number;
   openType: openTypeStr;
+  showCurClock: boolean;
 }
 
 export default function App(props: IProps) {
-  const { wallpaper, icon_size, tomatoSeconds, openType } = props;
+  const { wallpaper, icon_size, tomatoSeconds, openType, showCurClock } = props;
+
   const [state, dispatch] = useReducer(appReducer, {
     wallpaper,
     openType,
+    showCurClock,
     tomatoSeconds,
     iconSize: icon_size,
     showClock: false,
@@ -30,6 +34,7 @@ export default function App(props: IProps) {
           <Menu />
         </>
       )}
+      {!state.showCurClock && <Clock size={state.iconSize} />}
     </AppContextProvider>
   );
 }

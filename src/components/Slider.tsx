@@ -25,7 +25,7 @@ export default function Slider(props: sliderProps) {
   };
 
   return (
-    <>
+    <div className="slider-container">
       <div
         className="slider"
         onClick={handleModifyValue}
@@ -38,6 +38,6 @@ export default function Slider(props: sliderProps) {
         }
       ></div>
       <span className="time-text">{Math.round(value / 60)}分钟</span>
-    </>
+    </div>
   );
 }

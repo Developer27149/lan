@@ -27,7 +27,7 @@ export default React.memo(function Info() {
           </div>
         );
       })}
-      <div className="content">
+      <div className="content-me">
         <p>如果你有任何建议或意见，👏🏻欢迎给我发邮件</p>
         <span className="mail">
           <a href="mailto: rivenqin@gmail.com">

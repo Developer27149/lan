@@ -15,6 +15,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   saveToStorage({ icon_size: "sm" });
   saveToStorage({ tomato_seconds: 60 });
   saveToStorage({ open_type: "新页面" });
+  saveToStorage({ show_cur_clock: false });
   try {
     const res = await fetch(url);
     const jsonData = await res.json();

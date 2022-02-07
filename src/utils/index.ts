@@ -74,6 +74,13 @@ const handleStopMousemove = (e: React.MouseEvent<HTMLElement>) => {
   e.stopPropagation();
 };
 
+const getFormatCurClock = () => {
+  const date = new Date();
+  const mm = date.getMinutes();
+  const hh = date.getHours();
+  return `${hh > 9 ? hh : `0${hh}`}:${mm > 9 ? mm : `0${mm}`}`;
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -84,5 +91,6 @@ export {
   clearItemFromStorage,
   handleDownloadCurWallpaper,
   formatTomatoSeconds,
+  getFormatCurClock,
   handleStopMousemove,
 };

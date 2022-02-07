@@ -8,6 +8,7 @@ export const initState = {
   showClock: false,
   tomatoSeconds: 60,
   openType: "新页面" as openTypeStr,
+  showCurClock: false,
 };
 
 export const AppContext = createContext<{

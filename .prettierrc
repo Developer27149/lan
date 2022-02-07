@@ -1,5 +1,4 @@
 {
-  "extends": [
-    "prettier"
-  ]
+  "extends": ["prettier"],
+  "printWidth": 96
 }
