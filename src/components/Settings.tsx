@@ -1,6 +1,7 @@
 import { useAppContext } from "../context/index.js";
 import "../style/settings.sass";
 import { iconSize } from "../types/index.js";
+import { handleStopMousemove } from "../utils/index.js";
 import Info from "./Info";
 import Slider from "./Slider";
 interface IProps {
@@ -18,7 +19,11 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
     lg: "大",
   };
   return (
-    <div className="settings-container" onClick={handleSwitchShowSetting}>
+    <div
+      className="settings-container"
+      onClick={handleSwitchShowSetting}
+      onMouseMove={handleStopMousemove}
+    >
       <div
         className="settings"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}

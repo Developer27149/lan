@@ -5,10 +5,6 @@ const getWallpaperBase64 = async () => {
   return wallpaper;
 };
 
-const saveWallpaperFromUrl = (url: string) => {
-  const res = "";
-};
-
 const keyword2site = {
   gg: "google",
   z: "zhihu",
@@ -73,10 +69,14 @@ const formatTomatoSeconds = (count: number) => {
   }`;
 };
 
+// 在打开设置页面的时候防止显示搜索框
+const handleStopMousemove = (e: React.MouseEvent<HTMLElement>) => {
+  e.stopPropagation();
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
-  saveWallpaperFromUrl,
   getRandomColor,
   saveToStorage,
   getObjFromStorage,
@@ -84,4 +84,5 @@ export {
   clearItemFromStorage,
   handleDownloadCurWallpaper,
   formatTomatoSeconds,
+  handleStopMousemove,
 };
