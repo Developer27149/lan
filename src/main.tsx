@@ -13,6 +13,7 @@ const promiseArr = [
   getObjFromStorage("show_cur_clock"),
   getObjFromStorage("engine"),
 ];
+
 Promise.all(promiseArr).then((props: any[]) => {
   const [wallpaper, icon_size, tomato_seconds, open_type, show_cur_clock, engine] = props;
 

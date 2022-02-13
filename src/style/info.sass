@@ -42,17 +42,13 @@
     .or
       &::after,&::before        
         content: ""
-        display: block
+        display: inline-block
+        margin: 0 10px
         height: 1px
         width: 8rem
         background-color: #e7e1e1
-        position: relative
-      &::after
-        right: 8rem
-        top: -10px
-      &::before
-        left: 8rem
-        top: 12px
+        vertical-align: middle
+
   .links
     display: flex
     justify-content: center

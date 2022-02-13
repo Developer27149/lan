@@ -5,18 +5,21 @@ headers.append("Content-Type", "application/json");
 const url = `https://api.unsplash.com/collections/hkToSCaeZUE/photos?client_id=${access_key}&per_page=1`;
 
 function saveToStorage(obj) {
-  chrome.storage.local.set(obj);
+  return chrome.storage.local.set(obj);
 }
 
 // init storage data
 chrome.runtime.onInstalled.addListener(async () => {
-  saveToStorage({ engine: "gg" });
-  saveToStorage({ wallpaper_page: 1 });
-  saveToStorage({ icon_size: "sm" });
-  saveToStorage({ tomato_seconds: 60 });
-  saveToStorage({ open_type: "新页面" });
-  saveToStorage({ show_cur_clock: false });
+  const tasks = [
+    saveToStorage({ engine: "gg" }),
+    saveToStorage({ wallpaper_page: 1 }),
+    saveToStorage({ icon_size: "sm" }),
+    saveToStorage({ tomato_seconds: 60 }),
+    saveToStorage({ show_cur_clock: false }),
+    saveToStorage({ open_type: "新页面" }),
+  ];
   try {
+    await Promise.all(tasks);
     const res = await fetch(url);
     const jsonData = await res.json();
     const { id, urls } = jsonData[0];
@@ -27,10 +30,6 @@ chrome.runtime.onInstalled.addListener(async () => {
     console.log(error);
   }
 });
-
-function saveToStorage(obj) {
-  chrome.storage.local.set(obj);
-}
 
 function blobToBase64(blob) {
   return new Promise((resolve, _) => {
@@ -44,6 +43,7 @@ async function saveBase64StrFromUrl(url) {
   const res = await fetch(url);
   const blob = await res.blob();
   const base64 = await blobToBase64(blob);
-  console.log(base64);
-  saveToStorage({ wallpaper: base64 });
+  await saveToStorage({ wallpaper: base64 });
+  await chrome.storage.local.get("wallpaper");
+  return;
 }
