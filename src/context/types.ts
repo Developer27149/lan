@@ -1,18 +1,12 @@
-import { iconSize, keywordType, openTypeStr } from "../types/index";
+import { iconSize, keywordType, openTypeStr, storageDataType } from "../types/index";
 
 export interface IAction {
   type: "iconSize" | "wallpaper" | "clock" | "tomato" | "openType" | "curClock" | "engine";
   payload: any;
 }
 
-export interface IState {
-  iconSize: iconSize;
-  wallpaper: string;
+export interface IState extends storageDataType {
   showClock: boolean;
-  tomatoSeconds: number;
-  openType: openTypeStr;
-  showCurClock: boolean;
-  engine: keywordType;
 }
 
 export type AppContext = {

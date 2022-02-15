@@ -4,34 +4,9 @@ const headers = new Headers();
 headers.append("Content-Type", "application/json");
 const url = `https://api.unsplash.com/collections/hkToSCaeZUE/photos?client_id=${access_key}&per_page=1`;
 
-function saveToStorage(obj) {
-  return chrome.storage.local.set(obj);
-}
+const saveToStorage = async (obj) => chrome.storage.local.set(obj);
 
-// init storage data
-chrome.runtime.onInstalled.addListener(async () => {
-  const tasks = [
-    saveToStorage({ engine: "gg" }),
-    saveToStorage({ wallpaper_page: 1 }),
-    saveToStorage({ icon_size: "sm" }),
-    saveToStorage({ tomato_seconds: 60 }),
-    saveToStorage({ show_cur_clock: false }),
-    saveToStorage({ open_type: "新页面" }),
-  ];
-  try {
-    await Promise.all(tasks);
-    const res = await fetch(url);
-    const jsonData = await res.json();
-    const { id, urls } = jsonData[0];
-    // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
-    saveToStorage({ historyIds: id });
-    saveBase64StrFromUrl(urls.raw);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-function blobToBase64(blob) {
+async function blobToBase64(blob) {
   return new Promise((resolve, _) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result);
@@ -39,11 +14,40 @@ function blobToBase64(blob) {
   });
 }
 
-async function saveBase64StrFromUrl(url) {
-  const res = await fetch(url);
-  const blob = await res.blob();
-  const base64 = await blobToBase64(blob);
-  await saveToStorage({ wallpaper: base64 });
-  await chrome.storage.local.get("wallpaper");
-  return;
+async function getBase64DataFromUrl(url) {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return blobToBase64(blob);
+  } catch (_) {
+    return "";
+  }
 }
+
+// init storage data
+chrome.runtime.onInstalled.addListener(async () => {
+  let config = {
+    engine: "gg",
+    wallpaper_page: 1,
+    icon_size: "sm",
+    tomato_seconds: 60,
+    show_cur_clock: false,
+    open_type: "新页面",
+    imgQuality: "regular",
+    historyId: [],
+    wallpaperBase64:
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAALCAYAAABCm8wlAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QoPAxIb88htFgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACxSURBVBjTdY6xasJgGEXP/RvoonvAd8hDyD84+BZBEMSxL9GtQ8Fis7i6BkGI4DP4CA4dnQON3g6WNjb2wLd8nAsHWsR3D7JXt18kALFwz2dGmPVhJt0IcenUDVsgu91eCRZ9IOMfAnBvSCz8I3QYL0yV6zfyL+VUxKWfMJuOEFd+dE3pC1Finwj0HfGBeKGmblcFTIN4U2C4m+hZAaTrASSGox6YV7k+ARAp4gIIOH0BmuY1E5TjCIUAAAAASUVORK5CYII=",
+  };
+  try {
+    const res = await fetch(url);
+    const jsonData = await res.json();
+    const { id, urls } = jsonData[0];
+    // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
+    config.wallpaperBase64 = await getBase64DataFromUrl(urls.regular);
+    config.historyId = [id];
+  } catch (error) {
+    console.log(error);
+  } finally {
+    saveToStorage({ config });
+  }
+});
