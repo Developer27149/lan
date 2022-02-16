@@ -5,51 +5,30 @@ import { handleStopMousemove } from "../utils/index.js";
 import Info from "./Info";
 import Slider from "./Slider";
 import SwitchOptions from "./SwitchOptions";
+import { useRecoilState } from 'recoil';
+import { configState } from '../recoilRoot';
 interface IProps {
   handleSwitchShowSetting: () => void;
 }
+
+enum IconSizeEnum {
+  lg = "大",
+  md = "中",
+  sm = "小"
+}
+
 export default function Settings({ handleSwitchShowSetting }: IProps) {
-  const { state, dispatch } = useAppContext();
-  const initIconSizeEvent = (payload: iconSize) => () => {
-    dispatch({ type: "iconSize", payload });
-  };
-  const initSwitchIconsizeOption = (text: string, size: iconSize) => ({
-    text,
-    onClickEvent: initIconSizeEvent(size),
-    active: size === state.iconSize,
-  });
-  const initOpenTypeEvent = (payload: openTypeStr) => () => {
-    dispatch({ type: "openType", payload });
-  };
-  const initSwitchOpenPageStyle = (text: string, typeStr: openTypeStr) => ({
-    text,
-    onClickEvent: initOpenTypeEvent(typeStr),
-    active: typeStr === state.openType,
-  });
-  const initShowCurTimeEvent = (payload: boolean) => () => {
-    dispatch({ type: "curClock", payload });
-  };
-  const initSwitchShowCurTimeOptions = (text: string, isShowCurTime: boolean) => ({
-    text,
-    onClickEvent: initShowCurTimeEvent(isShowCurTime),
-    active: isShowCurTime === state.showCurClock,
-  });
-  // init options about icon size
-  const option1 = [
-    initSwitchIconsizeOption("小", "sm"),
-    initSwitchIconsizeOption("中", "md"),
-    initSwitchIconsizeOption("大", "lg"),
-  ];
-  // init search open style
-  const option2 = [
-    initSwitchOpenPageStyle("新页面", "新页面"),
-    initSwitchOpenPageStyle("当前页", "当前页"),
-  ];
-  // init show current time option
-  const option3 = [
-    initSwitchShowCurTimeOptions("显示", false),
-    initSwitchShowCurTimeOptions("隐藏", true),
-  ];
+  const [config, setConfig] = useRecoilState(configState) 
+  const {publicObject} = config;
+  const {iconSize, openType, showCurClock} = publicObject;
+  // init
+  const option1 = {
+    text: IconSizeEnum[iconSize],
+    onClickEvent: () => setConfig({...config, publicObject: {
+      ...publicObject,
+      iconSize: 
+    }})
+  }
   return (
     <div
       className="settings-container"

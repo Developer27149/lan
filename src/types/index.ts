@@ -1,13 +1,18 @@
 export type storageDataType = {
-  engine: keywordType;
-  wallpaperPage: number;
-  iconSize: iconSize;
-  openType: openTypeStr;
-  imgQuality: imgQualityType;
+  publicObject: {
+    engine: keywordType;
+    wallpaperPage: number;
+    iconSize: iconSize;
+    openType: openTypeStr;
+    imgQuality: imgQualityType;
+    currentWallpaperQuality: imgQualityType;
+    tomatoSeconds: number;
+    showCurClock: boolean;
+    wallpaperBase64: string;
+    imageUrl: string;
+    showClock: boolean;
+  };
   historyId: string[];
-  tomatoSeconds: number;
-  showCurClock: boolean;
-  wallpaperBase64: string;
 };
 
 export type imgQualityType = "regular" | "full" | "raw";

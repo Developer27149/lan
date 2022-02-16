@@ -10,19 +10,14 @@ import Settings from "./Settings";
 export default function Menu() {
   const { state } = useAppContext();
   const [showMenu, setShowMenu] = useState(false);
-  const { handleSwitchShowClock, handleSwitchShowSetting, showSetting } =
-    useMenu();
+  const { handleSwitchShowClock, handleSwitchShowSetting, showSetting } = useMenu();
 
   return (
     <>
-      <div
-        className="menu"
-        data-size={state.iconSize}
-        data-shrik={`${showMenu}`}
-      >
+      <div className="menu" data-size={state.iconSize} data-shrink={`${showMenu}`}>
         {showMenu ? (
           <>
-            <div className="download" onClick={handleDownloadCurWallpaper}>
+            <div className="download" onClick={() => handleDownloadCurWallpaper(state)}>
               <img src="icons/save.svg" />
             </div>
             <div className="rest" onClick={handleSwitchShowClock}>
@@ -41,9 +36,7 @@ export default function Menu() {
           </div>
         )}
       </div>
-      {showSetting && (
-        <Settings handleSwitchShowSetting={handleSwitchShowSetting} />
-      )}
+      {showSetting && <Settings handleSwitchShowSetting={handleSwitchShowSetting} />}
     </>
   );
 }

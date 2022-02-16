@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { storageDataType } from "../types/index.js";
 
 const getWallpaperBase64 = async () => {
   const { wallpaper = "" } = await chrome.storage.local.get("wallpaper");
@@ -18,55 +19,37 @@ const getRandomColor = () => {
   return colors[_.random(colors.length - 1)];
 };
 
-const saveToStorage = async (obj: { [key: string]: unknown }): Promise<void> =>
-  chrome.storage.local.set(obj);
-
-const clearItemFromStorage = async (key: string) =>
-  chrome.storage.local.remove(key);
-
-const getObjFromStorage = async (
-  key: string
-): Promise<{ [key: string]: any } | null> => {
-  const res = await chrome.storage.local.get(key);
-  if (res) {
-    return res;
-  }
-  return null;
-};
-
-function blobToBase64(blob: Blob) {
+function blobToBase64(blob: Blob): Promise<string> {
   return new Promise((resolve, _) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
+    reader.onloadend = () => resolve(reader.result as string);
     reader.readAsDataURL(blob);
   });
 }
 
-const saveWallpaperBase64FromUrl = async (url: string) => {
+const getWallpaperBase64FromUrl = async (url: string) => {
   try {
     const res = await fetch(url);
     const blob = await res.blob();
-    const base64 = await blobToBase64(blob);
-    await clearItemFromStorage("wallpaper");
-    await saveToStorage({ wallpaper: base64 });
-    return true;
+    return blobToBase64(blob);
   } catch (error) {
     console.log(error);
-    return error;
+    return "";
   }
 };
 
-const handleDownloadCurWallpaper = async () => {
-  const res = await getObjFromStorage("wallpaper");
-  chrome.downloads.download({ url: res?.wallpaper });
-};
+const handleDownloadCurWallpaper = (config: storageDataType) =>
+  chrome.downloads.download({
+    url:
+      config.publicObject.currentWallpaperQuality === "raw"
+        ? config.publicObject.wallpaperBase64
+        : config.publicObject.imageUrl,
+  });
 
 const formatTomatoSeconds = (count: number) => {
   const minutes = ~~(count / 60);
   const seconds = count % 60;
-  return `${minutes > 9 ? minutes : `0${minutes}`}:${
-    seconds > 9 ? seconds : `0${seconds}`
-  }`;
+  return `${minutes > 9 ? minutes : `0${minutes}`}:${seconds > 9 ? seconds : `0${seconds}`}`;
 };
 
 // 在打开设置页面的时候防止显示搜索框
@@ -81,16 +64,11 @@ const getFormatCurClock = () => {
   return `${hh > 9 ? hh : `0${hh}`}:${mm > 9 ? mm : `0${mm}`}`;
 };
 
-
-
 export {
   keyword2site,
   getWallpaperBase64,
   getRandomColor,
-  saveToStorage,
-  getObjFromStorage,
-  saveWallpaperBase64FromUrl,
-  clearItemFromStorage,
+  getWallpaperBase64FromUrl,
   handleDownloadCurWallpaper,
   formatTomatoSeconds,
   getFormatCurClock,

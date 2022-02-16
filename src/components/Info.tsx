@@ -20,7 +20,7 @@ export default React.memo(function Info() {
             <span>{key}</span>
             <span>+</span>
             <span>空格</span>
-            <span>=</span>
+            <div className="equal"></div>
             <span>
               <EngineIcon keyword={key as keywordType} />
             </span>

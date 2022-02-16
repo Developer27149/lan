@@ -1,7 +1,7 @@
-import { iconSize, keywordType, openTypeStr, storageDataType } from "../types/index";
+import { storageDataType } from "../types/index";
 
 export interface IAction {
-  type: "iconSize" | "wallpaper" | "clock" | "tomato" | "openType" | "curClock" | "engine";
+  type: "history" | "public" | "clock";
   payload: any;
 }
 
