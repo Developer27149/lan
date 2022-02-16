@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAppContext } from "../context/index.js";
 import { requestNewestWallpaper } from "../utils/unsplash";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";

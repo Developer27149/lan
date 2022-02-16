@@ -1,5 +1,4 @@
 import { SetterOrUpdater } from "recoil";
-import { IAction } from "../context/types";
 import { storageDataType } from "../types/index";
 import { getWallpaperBase64FromUrl } from "./index.js";
 const access_key = "ETQLApk4L6g__-ELS59ONCB_e8oAjqtgWYgzDl76-9I";
