@@ -1,9 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { keywordType } from "../types/index";
 import _ from "lodash";
-import { getObjFromStorage, getRandomColor, saveToStorage } from "../utils/index";
+import { getRandomColor, updateRootStateWithKeyAndValue } from "../utils/index";
+import { useSetRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 
 export const useSearch = (engineType: keywordType) => {
+  const setConfig = useSetRecoilState(configState);
   const [curKeyword, setCurKeyword] = useState<keywordType>(engineType);
   const [visibility, setVisibility] = useState("hidden");
   const [iconColor, setIconColor] = useState("purple");
@@ -14,7 +17,7 @@ export const useSearch = (engineType: keywordType) => {
     }
   }, []);
   useEffect(() => {
-    saveToStorage({ engine: curKeyword });
+    updateRootStateWithKeyAndValue(setConfig, "engine", curKeyword);
   }, [curKeyword]);
 
   useEffect(() => {
@@ -23,10 +26,6 @@ export const useSearch = (engineType: keywordType) => {
 
   useEffect(() => {
     // init keyword
-    (async () => {
-      const res = await getObjFromStorage("engine");
-      setCurKeyword(res?.engine);
-    })();
     // init search box visibility attr
     let id = 0;
     const handleMouseMove = _.debounce(() => {

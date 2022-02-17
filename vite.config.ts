@@ -21,7 +21,9 @@ export default defineConfig({
     ? {
         outDir: "lan_crx",
         watch: {},
-        sourcemap: false,
+        sourcemap: true,
       }
-    : {},
+    : {
+        sourcemap: false,
+      },
 });

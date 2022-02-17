@@ -15,7 +15,7 @@ export default function Clock() {
       clearInterval(id);
     };
   }, []);
-  if (!config.publicObject.showClock) return null;
+  if (!config?.publicObject?.showCurClock) return null;
   return (
     <span data-size={config.publicObject.iconSize} className="cur-clock-container">
       {timeStr}

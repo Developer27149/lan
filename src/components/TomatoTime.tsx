@@ -1,16 +1,22 @@
-import { useAppContext } from "../context/index";
 import "../style/tomatoTime.sass";
 import { useState, useEffect } from "react";
 import { BsArrowsExpand } from "react-icons/bs";
 import { formatTomatoSeconds } from "../utils/index.js";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 
 export default function tomatoSeconds() {
-  const { state, dispatch } = useAppContext();
-  const [count, setCount] = useState(state.tomatoSeconds);
+  const [config, setConfig] = useRecoilState(configState);
+  const { publicObject } = config;
+  const { tomatoSeconds, iconSize } = publicObject;
+  const [count, setCount] = useState(tomatoSeconds);
   const handleHiddenClock = () => {
-    dispatch({
-      type: "clock",
-      payload: false,
+    setConfig({
+      ...config,
+      publicObject: {
+        ...publicObject,
+        showClock: false,
+      },
     });
   };
   useEffect(() => {
@@ -20,10 +26,7 @@ export default function tomatoSeconds() {
         setCount((prevCount) => prevCount - 1);
       }, 1000);
     } else {
-      dispatch({
-        type: "clock",
-        payload: false,
-      });
+      handleHiddenClock();
     }
     return () => {
       clearTimeout(id);
@@ -31,7 +34,7 @@ export default function tomatoSeconds() {
   }, [count]);
 
   return (
-    <div className="clock-container" data-size={state.iconSize}>
+    <div className="clock-container" data-size={iconSize}>
       <div className="count">{formatTomatoSeconds(count)}</div>
       <div className="info">揉揉眼睛，伸伸懒腰</div>
       <span className="hidden" onClick={handleHiddenClock}>

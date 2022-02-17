@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { storageDataType } from "../types/index.js";
+import { SetterOrUpdater } from "recoil";
 
 const getWallpaperBase64 = async () => {
   const { wallpaper = "" } = await chrome.storage.local.get("wallpaper");
@@ -64,6 +65,24 @@ const getFormatCurClock = () => {
   return `${hh > 9 ? hh : `0${hh}`}:${mm > 9 ? mm : `0${mm}`}`;
 };
 
+const updateRootStateWithKeyAndValue = (
+  setConfig: SetterOrUpdater<storageDataType>,
+  key: any,
+  value: any
+) => {
+  setConfig((prevConfig) => {
+    const temp = Object.assign({}, prevConfig);
+    if (key === "historyId") {
+      temp.historyId = value;
+    } else {
+      if (prevConfig.publicObject[key as keyof typeof prevConfig.publicObject] === value)
+        return prevConfig;
+      temp.publicObject = Object.assign({}, prevConfig.publicObject, { key: value });
+    }
+    return temp;
+  });
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -73,4 +92,5 @@ export {
   formatTomatoSeconds,
   getFormatCurClock,
   handleStopMousemove,
+  updateRootStateWithKeyAndValue,
 };

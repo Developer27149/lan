@@ -1,6 +1,6 @@
 import "../style/settings.sass";
 import { iconSize, openTypeStr } from "../types/index.js";
-import { handleStopMousemove } from "../utils/index.js";
+import { handleStopMousemove, updateRootStateWithKeyAndValue } from "../utils/index.js";
 import Info from "./Info";
 import Slider from "./Slider";
 import SwitchOptions from "./SwitchOptions";
@@ -50,13 +50,16 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
         <SwitchOptions
           options={["新页面", "当前页"]}
           handleSwitch={(option) => {
-            setConfig({
-              ...config,
-              publicObject: {
-                ...publicObject,
-                openType: option as openTypeStr,
-              },
-            });
+            if (option !== openType) {
+              console.log("set open type to:", option, openType);
+              setConfig({
+                ...config,
+                publicObject: {
+                  ...publicObject,
+                  openType: option as openTypeStr,
+                },
+              });
+            }
           }}
           currentOption={openType}
           title="搜索页面打开方式"
@@ -65,13 +68,7 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
           options={["显示", "隐藏"]}
           currentOption={showCurClock ? "显示" : "隐藏"}
           handleSwitch={(option) => {
-            setConfig({
-              ...config,
-              publicObject: {
-                ...publicObject,
-                showCurClock: option === "显示",
-              },
-            });
+            updateRootStateWithKeyAndValue(setConfig, "showCurClock", option === "显示");
           }}
           title="左上角显示当前时间"
         />
