@@ -39,13 +39,16 @@ const getWallpaperBase64FromUrl = async (url: string) => {
   }
 };
 
-const handleDownloadCurWallpaper = (config: storageDataType) =>
+const handleDownloadCurWallpaper = (config: storageDataType) => {
+  console.log(config.publicObject);
+
   chrome.downloads.download({
     url:
       config.publicObject.currentWallpaperQuality === "raw"
         ? config.publicObject.wallpaperBase64
         : config.publicObject.imageUrl,
   });
+};
 
 const formatTomatoSeconds = (count: number) => {
   const minutes = ~~(count / 60);
@@ -71,16 +74,32 @@ const updateRootStateWithKeyAndValue = (
   value: any
 ) => {
   setConfig((prevConfig) => {
-    const temp = Object.assign({}, prevConfig);
     if (key === "historyId") {
-      temp.historyId = value;
+      prevConfig.historyId = value;
     } else {
       if (prevConfig.publicObject[key as keyof typeof prevConfig.publicObject] === value)
         return prevConfig;
-      temp.publicObject = Object.assign({}, prevConfig.publicObject, { key: value });
+      prevConfig.publicObject = { ...prevConfig.publicObject, ...{ [key]: value } };
     }
-    return temp;
+    return Object.assign(
+      {},
+      {
+        publicObject: Object.assign({}, prevConfig.publicObject),
+        historyId: [...prevConfig.historyId],
+      }
+    );
   });
+};
+
+const createReflectMapObject = (keys: string[], values: string[]) => {
+  const res: { [key: string]: string } = {};
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    const v = values[i];
+    res[k] = v;
+    res[v] = k;
+  }
+  return res;
 };
 
 export {
@@ -93,4 +112,5 @@ export {
   getFormatCurClock,
   handleStopMousemove,
   updateRootStateWithKeyAndValue,
+  createReflectMapObject,
 };

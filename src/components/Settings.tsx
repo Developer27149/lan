@@ -1,6 +1,9 @@
 import "../style/settings.sass";
-import { iconSize, openTypeStr } from "../types/index.js";
-import { handleStopMousemove, updateRootStateWithKeyAndValue } from "../utils/index.js";
+import {
+  createReflectMapObject,
+  handleStopMousemove,
+  updateRootStateWithKeyAndValue,
+} from "../utils/index";
 import Info from "./Info";
 import Slider from "./Slider";
 import SwitchOptions from "./SwitchOptions";
@@ -10,18 +13,47 @@ interface IProps {
   handleSwitchShowSetting: () => void;
 }
 
-type IIconSizeOption = "大" | "中" | "小";
-enum IconSizeEnum {
-  "大" = "lg",
-  "中" = "md",
-  "小" = "sm",
-}
+const iconMap = createReflectMapObject(["大", "中", "小"], ["lg", "md", "sm"]);
+const imgQualityMap = createReflectMapObject(
+  ["原画", "高清", "常规"],
+  ["raw", "full", "regular"]
+);
 
 export default function Settings({ handleSwitchShowSetting }: IProps) {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
-  const { iconSize, openType, showCurClock, tomatoSeconds } = publicObject;
-  // init
+  const { iconSize, openType, showCurClock, tomatoSeconds, imgQuality } = publicObject;
+  // init switch array
+  const switchList = [
+    {
+      options: ["大", "中", "小"],
+      currentOption: iconMap[iconSize],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "iconSize", iconMap[option]),
+      title: "图标大小",
+    },
+    {
+      options: ["新页面", "当前页"],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "openType", option),
+      currentOption: openType,
+      title: "搜索页面打开方式",
+    },
+    {
+      options: ["显示", "隐藏"],
+      currentOption: showCurClock ? "显示" : "隐藏",
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "showCurClock", option === "显示"),
+      title: "左上角显示当前时间",
+    },
+    {
+      title: "画质设置",
+      options: ["原画", "高清", "常规"],
+      currentOption: imgQualityMap[imgQuality],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "imgQuality", imgQualityMap[option]),
+    },
+  ];
 
   return (
     <div
@@ -33,45 +65,9 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
         className="settings"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
-        <SwitchOptions
-          options={["大", "中", "小"]}
-          currentOption={iconSize}
-          handleSwitch={(option) =>
-            setConfig({
-              ...config,
-              publicObject: {
-                ...publicObject,
-                iconSize: IconSizeEnum[option as IIconSizeOption],
-              },
-            })
-          }
-          title="图标大小"
-        />
-        <SwitchOptions
-          options={["新页面", "当前页"]}
-          handleSwitch={(option) => {
-            if (option !== openType) {
-              console.log("set open type to:", option, openType);
-              setConfig({
-                ...config,
-                publicObject: {
-                  ...publicObject,
-                  openType: option as openTypeStr,
-                },
-              });
-            }
-          }}
-          currentOption={openType}
-          title="搜索页面打开方式"
-        />
-        <SwitchOptions
-          options={["显示", "隐藏"]}
-          currentOption={showCurClock ? "显示" : "隐藏"}
-          handleSwitch={(option) => {
-            updateRootStateWithKeyAndValue(setConfig, "showCurClock", option === "显示");
-          }}
-          title="左上角显示当前时间"
-        />
+        {switchList.map((properties, idx) => (
+          <SwitchOptions {...properties} key={idx} />
+        ))}
         <div className="rest">
           <h4>番茄钟</h4>
           <Slider value={tomatoSeconds} />

@@ -6,7 +6,7 @@ import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
 import { storageDataType } from "./types/index";
 import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
-import { saveConfigFromStorage } from "./utils/storage";
+import { getConfigFromStorage, saveConfigFromStorage, saveToStorage } from "./utils/storage";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
@@ -15,13 +15,18 @@ export default function App(props: { config: storageDataType }) {
   useEffect(() => {
     console.log("init config");
     setConfig(config);
-    setTimeout(() => {
-      setIsRender(true);
-    }, 100);
+    setTimeout(() => {}, 10);
+    setIsRender(true);
+    // init debug api
+    globalThis.getConfig = () => {
+      getConfigFromStorage().then((res) => {
+        console.log(res.publicObject);
+      });
+    };
   }, []);
   useEffect(() => {
     if (state?.publicObject) {
-      saveConfigFromStorage(state);
+      saveToStorage(state);
     }
   }, [state]);
   if (!isRender) return null;

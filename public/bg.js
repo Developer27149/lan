@@ -48,6 +48,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
     config.publicObject.wallpaperBase64 = await getBase64DataFromUrl(urls.regular);
     config.historyId = [id];
+    config.publicObject.imageUrl = urls.full;
   } catch (error) {
     console.log(error);
   } finally {

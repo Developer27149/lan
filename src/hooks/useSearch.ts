@@ -17,6 +17,8 @@ export const useSearch = (engineType: keywordType) => {
     }
   }, []);
   useEffect(() => {
+    console.log("current keyword is:", curKeyword);
+
     updateRootStateWithKeyAndValue(setConfig, "engine", curKeyword);
   }, [curKeyword]);
 

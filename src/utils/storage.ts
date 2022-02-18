@@ -11,10 +11,20 @@ export const getFromStorage = async (key: string) => {
   });
 };
 
+export const saveToStorage = async (config: storageDataType) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ config }, () => {
+        console.log("ok");
+        resolve(true);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const getConfigFromStorage = async () => {
   const { config } = (await getFromStorage("config")) as { config: storageDataType };
   return config;
 };
-
-export const saveConfigFromStorage = (config: storageDataType) =>
-  chrome.storage.local.set(config);
