@@ -7,6 +7,7 @@ import { storageDataType } from "./types/index";
 import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
 import { getConfigFromStorage, saveToStorage } from "./utils/storage";
+import BookmarkContainer from "./components/BookmarkContainer";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
@@ -39,6 +40,7 @@ export default function App(props: { config: storageDataType }) {
           <ModifyWallpaperBtn />
           <Menu />
           <Clock />
+          <BookmarkContainer />
         </>
       ) : null}
     </>

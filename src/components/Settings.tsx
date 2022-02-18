@@ -18,12 +18,23 @@ const imgQualityMap = createReflectMapObject(
   ["原画", "高清", "常规"],
   ["raw", "full", "regular"]
 );
+const bookmarkPosMap = createReflectMapObject(
+  ["上", "下", "左", "右"],
+  ["top", "bottom", "left", "right"]
+);
 
 export default function Settings({ handleSwitchShowSetting }: IProps) {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
-  const { iconSize, openType, showCurClock, tomatoSeconds, imgQuality, showBookmark } =
-    publicObject;
+  const {
+    iconSize,
+    openType,
+    showCurClock,
+    tomatoSeconds,
+    imgQuality,
+    showBookmark,
+    bookmarkPos,
+  } = publicObject;
   // init switch array
   const switchList = [
     {
@@ -60,6 +71,13 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
       currentOption: showBookmark ? "是" : "否",
       handleSwitch: (option: any) =>
         updateRootStateWithKeyAndValue(setConfig, "showBookmark", option === "是"),
+    },
+    {
+      title: "书签位置",
+      options: ["上", "下", "左", "右"],
+      currentOption: bookmarkPosMap[bookmarkPos],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "bookmarkPos", bookmarkPosMap[option]),
     },
   ];
 

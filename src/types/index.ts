@@ -12,10 +12,15 @@ export type storageDataType = {
     imageUrl: string;
     showClock: boolean;
     showBookmark: boolean;
+    bookmarkPos: bookmarkPosType;
+    bookmarkList: {
+      url: string;
+      icon: string;
+    }[];
   };
   historyId: string[];
 };
-
+export type bookmarkPosType = "left" | "right" | "top" | "bottom";
 export type imgQualityType = "regular" | "full" | "raw";
 export type keywordType = "gg" | "z" | "b" | "gh" | "y";
 export type iconSize = "lg" | "sm" | "md";
