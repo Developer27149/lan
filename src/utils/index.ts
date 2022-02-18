@@ -91,8 +91,8 @@ const updateRootStateWithKeyAndValue = (
   });
 };
 
-const createReflectMapObject = (keys: string[], values: string[]) => {
-  const res: { [key: string]: string } = {};
+const createReflectMapObject = (keys: any[], values: any[]) => {
+  const res: { [key: string]: any } = {};
   for (let i = 0; i < keys.length; i++) {
     const k = keys[i];
     const v = values[i];

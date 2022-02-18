@@ -38,6 +38,8 @@ chrome.runtime.onInstalled.addListener(async () => {
       imageUrl: "",
       currentWallpaperQuality: "regular",
       wallpaperBase64: "",
+      showBookmark: false,
+      showClock: false,
     },
     historyId: [],
   };
@@ -52,6 +54,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    saveToStorage({ config });
+    await saveToStorage({ config });
   }
 });

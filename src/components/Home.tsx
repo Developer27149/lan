@@ -1,13 +1,14 @@
 import Search from "./Search";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import TomatoTime from "./TomatoTime";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
+import { getWallpaperBase64FromUrl, updateRootStateWithKeyAndValue } from "../utils/index.js";
 
 export default function Home() {
-  const [config] = useRecoilState(configState);
+  const [config, setConfig] = useRecoilState(configState);
   const {
-    publicObject: { wallpaperBase64 },
+    publicObject: { wallpaperBase64, imageUrl, currentWallpaperQuality },
   } = config;
   const bgImgUrl = useMemo(() => {
     return {
@@ -17,6 +18,26 @@ export default function Home() {
           : `url(${config.publicObject.wallpaperBase64})`,
     };
   }, [wallpaperBase64]);
+  // 检查当前壁纸，如果是最低画质则进行优化到高清
+  useEffect(() => {
+    let isCancel = false;
+    const updateWallpaper = async () => {
+      if (!isCancel) {
+        const newImgBase64 = await getWallpaperBase64FromUrl(imageUrl);
+        updateRootStateWithKeyAndValue(setConfig, "wallpaperBase64", newImgBase64);
+        updateRootStateWithKeyAndValue(setConfig, "currentWallpaperQuality", "full");
+      }
+    };
+    if (currentWallpaperQuality === "regular") {
+      // 优化画质
+      console.log("优化一下");
+
+      updateWallpaper();
+    }
+    return () => {
+      isCancel = true;
+    };
+  }, [config.publicObject.wallpaperBase64]);
 
   return (
     <main style={bgImgUrl} className="main">

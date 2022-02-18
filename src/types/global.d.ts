@@ -1,1 +1,1 @@
-declare var getConfig: Function;
+declare var conf: Function;

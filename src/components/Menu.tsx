@@ -10,7 +10,6 @@ import { configState } from "../recoilRoot";
 
 export default function Menu() {
   const [config, setConfig] = useRecoilState(configState);
-
   const {
     handleSwitchShowClock,
     handleSwitchShowSetting,

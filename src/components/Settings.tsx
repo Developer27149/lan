@@ -22,7 +22,8 @@ const imgQualityMap = createReflectMapObject(
 export default function Settings({ handleSwitchShowSetting }: IProps) {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
-  const { iconSize, openType, showCurClock, tomatoSeconds, imgQuality } = publicObject;
+  const { iconSize, openType, showCurClock, tomatoSeconds, imgQuality, showBookmark } =
+    publicObject;
   // init switch array
   const switchList = [
     {
@@ -52,6 +53,13 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
       currentOption: imgQualityMap[imgQuality],
       handleSwitch: (option: any) =>
         updateRootStateWithKeyAndValue(setConfig, "imgQuality", imgQualityMap[option]),
+    },
+    {
+      title: "显示书签",
+      options: ["是", "否"],
+      currentOption: showBookmark ? "是" : "否",
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "showBookmark", option === "是"),
     },
   ];
 

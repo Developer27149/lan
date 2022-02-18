@@ -14,8 +14,9 @@ const requestNewestWallpaper = async (
   try {
     const { historyId, publicObject } = config;
     const { wallpaperPage, imgQuality } = publicObject;
-    const res = await fetch(`${url}&per_page=30&page=${wallpaperPage + 20 || 1}`);
+    const res = await fetch(`${url}&per_page=30&page=${wallpaperPage || 1}`);
     const jsonData = (await res.json()) as any[];
+    if (jsonData.length === 0) return "暂时找不到新的资源，联系 wechat: Pls-recovery 😂";
     const targetItem = jsonData.find((item) => !historyId.includes(item.id));
     if (targetItem) {
       const { wallpaperPage } = publicObject;
@@ -45,31 +46,9 @@ const requestNewestWallpaper = async (
         setConfig
       );
     }
-
-    // const ids = idsStr?.historyIds?.split(",") as string[];
-    // const arr = (await jsonPromise) as {
-    //   id: string;
-    //   urls: {
-    //     raw: string;
-    //   };
-    // }[];
-
-    // if (arr.length === 0) throw new Error("Sources not found!");
-    // const target = arr.find((i) => !ids.includes(i.id));
-    // if (target) {
-    //   ids.push(target.id);
-    //   saveToStorage({ historyIds: ids.join(",") });
-    //   const rawUrl = target.urls.raw;
-    //   await saveWallpaperBase64FromUrl(rawUrl);
-    //   return true;
-    // } else {
-    //   // 递归调用自己，直到返回的数据为空
-    //   await saveToStorage({ wallpaper_page: ~~pageObj?.wallpaper_page + 1 });
-    //   requestNewestWallpaper();
-    // }
   } catch (error) {
     console.log(error);
-    return "暂时找不到新的资源，联系 wechat: Pls-recovery 😂";
+    return error;
   }
 };
 

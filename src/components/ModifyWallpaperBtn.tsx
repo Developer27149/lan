@@ -5,17 +5,16 @@ import { configState } from "../recoilRoot";
 
 export default function ModifyWallpaperBtn() {
   const [config, setConfig] = useRecoilState(configState);
-
   const [isLoading, setIsLoading] = useState(false);
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async () => {
     setIsLoading(true);
-    await requestNewestWallpaper(config, setConfig);
-    // const obj = await getObjFromStorage("wallpaper");
-    // dispatch({
-    //   type: "wallpaper",
-    //   payload: obj?.wallpaper,
-    // });
-    setIsLoading(false);
+    try {
+      await requestNewestWallpaper(config, setConfig);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div>

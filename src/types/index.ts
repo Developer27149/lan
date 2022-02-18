@@ -11,6 +11,7 @@ export type storageDataType = {
     wallpaperBase64: string;
     imageUrl: string;
     showClock: boolean;
+    showBookmark: boolean;
   };
   historyId: string[];
 };
