@@ -23,7 +23,7 @@ export default function Home() {
     let isCancel = false;
     const updateWallpaper = async () => {
       if (!isCancel) {
-        const newImgBase64 = await getWallpaperBase64FromUrl(imageUrl);
+        const newImgBase64 = await getWallpaperBase64FromUrl(imageUrl, () => {});
         updateRootStateWithKeyAndValue(setConfig, "wallpaperBase64", newImgBase64);
         updateRootStateWithKeyAndValue(setConfig, "currentWallpaperQuality", "full");
       }

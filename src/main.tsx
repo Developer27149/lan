@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { RecoilRoot } from "recoil";
 import App from "./App";
 import "./style/global.sass";
-import { getConfigFromStorage } from "./utils/storage.js";
+import { getConfigFromStorage } from "./utils/storage";
+
 getConfigFromStorage().then((config) => {
   ReactDOM.render(
     <React.StrictMode>

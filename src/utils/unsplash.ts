@@ -1,5 +1,5 @@
 import { SetterOrUpdater } from "recoil";
-import { storageDataType } from "../types/index";
+import { downloadStateType, storageDataType } from "../types/index";
 import { getWallpaperBase64FromUrl } from "./index.js";
 const access_key = "ETQLApk4L6g__-ELS59ONCB_e8oAjqtgWYgzDl76-9I";
 
@@ -9,7 +9,8 @@ const url = `https://api.unsplash.com/collections/hkToSCaeZUE/photos?client_id=$
 
 const requestNewestWallpaper = async (
   config: storageDataType,
-  setConfig: SetterOrUpdater<storageDataType>
+  setConfig: SetterOrUpdater<storageDataType>,
+  setDownloadStatusData: SetterOrUpdater<downloadStateType>
 ) => {
   try {
     const { historyId, publicObject } = config;
@@ -26,7 +27,10 @@ const requestNewestWallpaper = async (
         urls: { raw: string; full: string; regular: string };
       };
       // 根据地址获取当前级别的图像
-      const wallpaperBase64 = await getWallpaperBase64FromUrl(urls[imgQuality]);
+      const wallpaperBase64 = await getWallpaperBase64FromUrl(
+        urls[imgQuality],
+        setDownloadStatusData
+      );
       if (wallpaperBase64 !== "") {
         // 下载好了
         setConfig({
@@ -43,11 +47,13 @@ const requestNewestWallpaper = async (
             wallpaperPage: publicObject.wallpaperPage + 1,
           },
         },
-        setConfig
+        setConfig,
+        setDownloadStatusData
       );
     }
   } catch (error) {
     console.log(error);
+    setDownloadStatusData({ isDownloading: false, progress: 1 });
     return error;
   }
 };

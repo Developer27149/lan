@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { storageDataType } from "../types/index.js";
+import { downloadStateType, storageDataType } from "../types/index.js";
 import { SetterOrUpdater } from "recoil";
 
 const getWallpaperBase64 = async () => {
@@ -28,10 +28,36 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
-const getWallpaperBase64FromUrl = async (url: string) => {
+const getWallpaperBase64FromUrl = async (
+  url: string,
+  setDownloadStatusData: SetterOrUpdater<downloadStateType>
+) => {
   try {
     const res = await fetch(url);
-    const blob = await res.blob();
+    const reader = res.body?.getReader()!;
+    const contentLength = +(res.headers.get("Content-Length") as string | number);
+    let receivedLength = 0;
+    const chunks = [];
+    while (true) {
+      const { done, value } = await reader?.read();
+      if (done) {
+        setDownloadStatusData({
+          isDownloading: false,
+          progress: 1,
+        });
+        break;
+      }
+      chunks.push(value);
+      receivedLength += value!.length;
+      const percent = (receivedLength / contentLength) * 100;
+      setDownloadStatusData({
+        isDownloading: true,
+        progress: Math.max(1, +percent.toFixed(2)),
+      });
+    }
+    const blob = new Blob(chunks as BlobPart[]);
+    // (async () => {})();
+    // const blob = await res.blob();
     return blobToBase64(blob);
   } catch (error) {
     console.log(error);

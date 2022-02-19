@@ -32,7 +32,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       wallpaperPage: 1,
       iconSize: "sm",
       tomatoSeconds: 60,
-      showCurClock: false,
+      showCurClock: true,
       openType: "新页面",
       imgQuality: "regular",
       imageUrl: "",

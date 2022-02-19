@@ -30,3 +30,8 @@ export type sliderProps = {
   min?: number;
   max?: number;
 };
+
+export type downloadStateType = {
+  isDownloading: boolean;
+  progress: number;
+};
