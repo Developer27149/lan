@@ -6,7 +6,7 @@ import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
 import { storageDataType } from "./types/index";
 import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
-import { getConfigFromStorage, saveToStorage } from "./utils/storage";
+import { getConfigFromStorage, saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
 
 export default function App(props: { config: storageDataType }) {
@@ -28,7 +28,7 @@ export default function App(props: { config: storageDataType }) {
   }, []);
   useEffect(() => {
     if (state?.publicObject) {
-      saveToStorage(state);
+      saveConfigToStorage(state);
     }
   }, [state]);
   if (!isRender) return null;

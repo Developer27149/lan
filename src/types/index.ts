@@ -35,3 +35,5 @@ export type downloadStateType = {
   isDownloading: boolean;
   progress: number;
 };
+
+export interface IBookmarkItem extends chrome.bookmarks.BookmarkTreeNode {}

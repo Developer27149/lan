@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { downloadStateType, storageDataType } from "../types/index.js";
+import { bookmarkPosType, downloadStateType, storageDataType } from "../types/index.js";
 import { SetterOrUpdater } from "recoil";
 
 const getWallpaperBase64 = async () => {
@@ -128,6 +128,30 @@ const createReflectMapObject = (keys: any[], values: any[]) => {
   return res;
 };
 
+const getAdjacent = (side: bookmarkPosType, value: number) => {
+  const res: { [k: string]: string } = {};
+  const filterObj = { top: "bottom", bottom: "top", right: "left", left: "right" };
+  Object.keys(filterObj)
+    .filter((i) => i !== filterObj[side])
+    .forEach((i) => {
+      res[i] = `${i === side ? value / 12 : value}px`;
+    });
+  return res;
+};
+
+const getImgBase64FromUrl = async (url: string) => {
+  try {
+    const res = await fetch(url, { method: "GET", mode: "no-cors" });
+    console.log(res, "is res data");
+
+    const blob = await res.blob();
+    return blobToBase64(blob);
+  } catch (error) {
+    console.log(error, " is fetch url error", `url is: ${url}`);
+    return "";
+  }
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -139,4 +163,6 @@ export {
   handleStopMousemove,
   updateRootStateWithKeyAndValue,
   createReflectMapObject,
+  getAdjacent,
+  getImgBase64FromUrl,
 };

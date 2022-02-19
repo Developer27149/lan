@@ -1,6 +1,46 @@
 .bookmarks-container
   position: fixed
   margin: 1rem
-  padding: 1rem
+  padding: 1.2rem 0.8em
   border-radius: 6px
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+  border-radius: 1rem
+
+  .bookmark_icon
+    width: 2.4rem
+    height: 2.4rem
+    color: white
+    cursor: pointer
+  .add_bookmark_box
+    width: max(40vw, 600px)
+    position: fixed
+    background-color: #eee
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+    padding: 1rem
+    color: #333
+    .inside_box      
+      input
+        display: block
+        width: 460px
+        height: 2rem
+        line-height: 2rem
+        padding: 4px 2rem
+        margin: 1rem
+        border-radius: 2rem
+        outline: none
+        border: none
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+
+      .result
+        background-color: #e7e1e1
+        overflow-x: hidden
+        .result_item
+          display: flex
+          align-items: center
+          font-size: 1.1rem
+          opacity: 0.9
+          a
+            text-decoration: none
+            color: #5964df
+
+
