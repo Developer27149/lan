@@ -12,9 +12,7 @@ import BookmarkContainer from "./components/BookmarkContainer";
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
   const [state, setConfig] = useRecoilState(configState);
-  const {
-    publicObject: { showClock },
-  } = state;
+
   const [isRender, setIsRender] = useState(false);
   useEffect(() => {
     setConfig(config);

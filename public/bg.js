@@ -57,6 +57,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         bookmarkList: [],
         showClock: false,
         hiddenSearchBox: false,
+        showAddIconBox: false,
       },
       historyId: [],
     };

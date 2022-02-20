@@ -15,6 +15,7 @@ export type storageDataType = {
     bookmarkPos: bookmarkPosType;
     bookmarkList: string[];
     hiddenSearchBox: boolean;
+    showAddIconBox: boolean;
   };
   historyId: string[];
 };

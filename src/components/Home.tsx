@@ -30,8 +30,6 @@ export default function Home() {
     };
     if (currentWallpaperQuality === "regular") {
       // 优化画质
-      console.log("优化一下");
-
       updateWallpaper();
     }
     return () => {
@@ -41,7 +39,8 @@ export default function Home() {
 
   return (
     <main style={bgImgUrl} className="main">
-      {config.publicObject.showClock  ? <TomatoTime /> : <Search />}
+      {config?.publicObject?.showClock && <TomatoTime />}
+      {!config?.publicObject?.hiddenSearchBox && <Search />}
     </main>
   );
 }

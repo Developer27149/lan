@@ -8,12 +8,15 @@ export const useMenu = (
   setConfig: SetterOrUpdater<storageDataType>
 ) => {
   const { publicObject } = config;
-  const { iconSize, showClock } = publicObject;
+  const { iconSize, showClock, showAddIconBox } = publicObject;
   const [showMenu, setShowMenu] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const handleSwitchShowSetting = () => setShowSetting(!showSetting);
   const handleSwitchShowClock = () => {
     updateRootStateWithKeyAndValue(setConfig, "showClock", !showClock);
+  };
+  const handleSwitchShowAddIconBox = () => {
+    updateRootStateWithKeyAndValue(setConfig, "showAddIconBox", !showAddIconBox);
   };
 
   return {
@@ -23,5 +26,6 @@ export const useMenu = (
     showMenu,
     setShowMenu,
     iconSize,
+    handleSwitchShowAddIconBox,
   };
 };

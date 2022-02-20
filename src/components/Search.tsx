@@ -8,9 +8,9 @@ import { configState } from "../recoilRoot";
 
 export default function Search() {
   const [config] = useRecoilState(configState);
-  if (config.publicObject.hiddenSearchBox) return null;
+
   const {
-    publicObject: { openType, engine },
+    publicObject: { openType, engine, hiddenSearchBox },
   } = config;
   const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } = useSearch(engine);
 
@@ -43,6 +43,7 @@ export default function Search() {
     }
   };
 
+  if (hiddenSearchBox) return null;
   return (
     <div className="search-box" data-show={visibility}>
       <input

@@ -7,6 +7,7 @@ import { handleDownloadCurWallpaper } from "../utils/index";
 import Settings from "./Settings";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
+import { AiOutlinePushpin } from "react-icons/ai";
 
 export default function Menu() {
   const [config, setConfig] = useRecoilState(configState);
@@ -17,6 +18,7 @@ export default function Menu() {
     iconSize,
     showMenu,
     setShowMenu,
+    handleSwitchShowAddIconBox,
   } = useMenu(config, setConfig);
 
   return (
@@ -32,6 +34,9 @@ export default function Menu() {
             </div>
             <div className="setting" onClick={handleSwitchShowSetting}>
               <FcSettings />
+            </div>
+            <div onClick={handleSwitchShowAddIconBox}>
+              <AiOutlinePushpin />
             </div>
             <div onClick={() => setShowMenu(!showMenu)}>
               <RiMenuUnfoldLine />

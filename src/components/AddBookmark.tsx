@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 import Avatar from "./Avatar";
 
-export default function AddBookmark() {
+export default function AddBookmark({ hiddenIt }: { hiddenIt: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [resultList, setResultList] = useState<IBookmarkItem[]>([]);
   const [config, setConfig] = useRecoilState(configState);
@@ -32,6 +32,7 @@ export default function AddBookmark() {
   };
   useEffect(() => {
     updateRootStateWithKeyAndValue(setConfig, "hiddenSearchBox", true);
+    document.addEventListener("click", hiddenIt, { once: true });
     return () => {
       updateRootStateWithKeyAndValue(setConfig, "hiddenSearchBox", false);
     };

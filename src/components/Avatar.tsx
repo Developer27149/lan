@@ -11,6 +11,7 @@ interface IProps {
 export default function Avatar({ href }: IProps) {
   const config = useRecoilValue(configState);
   const [srcValue, setSrcValue] = useState("");
+  const [opacity, setOpacity] = useState(0);
   const [isStorageUrl, setIsStorageUrl] = useState(false);
   useEffect(() => {
     (async () => {
@@ -32,6 +33,7 @@ export default function Avatar({ href }: IProps) {
   }, []);
 
   const handleLoadSuccess = () => {
+    setOpacity(1);
     // icon 来自网络，则通过网络尝试更新
     !isStorageUrl &&
       (async () => {
@@ -47,7 +49,7 @@ export default function Avatar({ href }: IProps) {
   };
   return (
     <div data-size={config.publicObject.iconSize} className="avatar">
-      <img src={srcValue} onLoad={handleLoadSuccess} />
+      <img src={srcValue} onLoad={handleLoadSuccess} style={{ opacity }} />
     </div>
   );
 }
