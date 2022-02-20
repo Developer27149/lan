@@ -13,10 +13,8 @@ export type storageDataType = {
     showClock: boolean;
     showBookmark: boolean;
     bookmarkPos: bookmarkPosType;
-    bookmarkList: {
-      url: string;
-      icon: string;
-    }[];
+    bookmarkList: string[];
+    hiddenSearchBox: boolean;
   };
   historyId: string[];
 };

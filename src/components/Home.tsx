@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <main style={bgImgUrl} className="main">
-      {config.publicObject.showClock ? <TomatoTime /> : <Search />}
+      {config.publicObject.showClock  ? <TomatoTime /> : <Search />}
     </main>
   );
 }

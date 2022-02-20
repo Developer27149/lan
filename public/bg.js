@@ -5,6 +5,18 @@ headers.append("Content-Type", "application/json");
 const url = `https://api.unsplash.com/collections/hkToSCaeZUE/photos?client_id=${access_key}&per_page=1`;
 
 const saveToStorage = async (obj) => chrome.storage.local.set(obj);
+const getFromStorage = async (key) => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
+      chrome.storage.local.get(key, (res) => {
+        resolve(res[key]);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 async function blobToBase64(blob) {
   return new Promise((resolve, _) => {
@@ -26,36 +38,40 @@ async function getBase64DataFromUrl(url) {
 
 // init storage data
 chrome.runtime.onInstalled.addListener(async () => {
-  let config = {
-    publicObject: {
-      engine: "gg",
-      wallpaperPage: 1,
-      iconSize: "sm",
-      tomatoSeconds: 60,
-      showCurClock: true,
-      openType: "新页面",
-      imgQuality: "regular",
-      imageUrl: "",
-      currentWallpaperQuality: "regular",
-      wallpaperBase64: "",
-      showBookmark: false,
-      bookmarkPos: "left",
-      bookmarkList: [],
-      showClock: false,
-    },
-    historyId: [],
-  };
-  try {
-    const res = await fetch(url);
-    const jsonData = await res.json();
-    const { id, urls } = jsonData[0];
-    // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
-    config.publicObject.wallpaperBase64 = await getBase64DataFromUrl(urls.regular);
-    config.historyId = [id];
-    config.publicObject.imageUrl = urls.full;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await saveToStorage({ config });
+  let config = await getFromStorage("config");
+  if (!config) {
+    config = {
+      publicObject: {
+        engine: "gg",
+        wallpaperPage: 1,
+        iconSize: "sm",
+        tomatoSeconds: 60,
+        showCurClock: true,
+        openType: "新页面",
+        imgQuality: "regular",
+        imageUrl: "",
+        currentWallpaperQuality: "regular",
+        wallpaperBase64: "",
+        showBookmark: true,
+        bookmarkPos: "left",
+        bookmarkList: [],
+        showClock: false,
+        hiddenSearchBox: false,
+      },
+      historyId: [],
+    };
+    try {
+      const res = await fetch(url);
+      const jsonData = await res.json();
+      const { id, urls } = jsonData[0];
+      // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
+      config.publicObject.wallpaperBase64 = await getBase64DataFromUrl(urls.regular);
+      config.historyId = [id];
+      config.publicObject.imageUrl = urls.full;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      await saveToStorage({ config });
+    }
   }
 });

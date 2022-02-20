@@ -2,76 +2,52 @@ import { useRecoilValue } from "recoil";
 import "../style/avatar.sass";
 import { configState } from "../recoilRoot";
 import { useEffect, useState } from "react";
-import { getImgBase64FromUrl, getRandomColor } from "../utils/index.js";
-import { searchIconBase64FromStorage } from "../utils/storage";
-import { FcLink } from "react-icons/fc";
+import { getImgBase64FromUrl } from "../utils/index.js";
+import { updateBookmarkIconData, searchIconBase64FromStorage } from "../utils/storage";
 
 interface IProps {
   href: string;
-  keyword: string;
 }
-export default function Avatar({ href, keyword }: IProps) {
+export default function Avatar({ href }: IProps) {
   const config = useRecoilValue(configState);
   const [srcValue, setSrcValue] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isStorageUrl, setIsStorageUrl] = useState(false);
   useEffect(() => {
-    // try {
-    const urlInstance = new URL(href);
-    const hostname = urlInstance.hostname;
-    const url = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${hostname}&size=32`;
-    setSrcValue(url);
     (async () => {
       try {
-        let base64Str = await searchIconBase64FromStorage(url);
-        if (base64Str && base64Str.length > 0) {
-          setSrcValue(base64Str);
+        const { origin, hostname } = new URL(href);
+        const urlRecordFromStorage = await searchIconBase64FromStorage(hostname);
+        if (urlRecordFromStorage) {
+          setSrcValue(urlRecordFromStorage);
+          setIsStorageUrl(true);
+          console.log("数据从本地获取");
         } else {
-          base64Str = await getImgBase64FromUrl(url);
-          if (base64Str.length > 0) {
-            // success
-            setSrcValue(base64Str);
-          }
+          const url = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${origin}&size=32`;
+          setSrcValue(url);
         }
       } catch (error) {
-        console.log("init icon base64 failed!!!", error);
-        // setIsLoadFail(true);
+        console.log("load failed...", error);
       }
     })();
-    // } catch (error) {
-    //   console.log(error, "new url obj failed");
-    //   setIsLoadFail(true);
-    // }
   }, []);
 
   const handleLoadSuccess = () => {
-    console.log("load success!");
-    setIsLoaded(true);
+    // icon 来自网络，则通过网络尝试更新
+    !isStorageUrl &&
+      (async () => {
+        const { origin, hostname } = new URL(href);
+        try {
+          const base64Str = await getImgBase64FromUrl(origin + "/favicon.ico");
+          if (base64Str!.length > 0) {
+            // 保存到 storage
+            updateBookmarkIconData(hostname, base64Str!);
+          }
+        } catch (e) {}
+      })();
   };
   return (
     <div data-size={config.publicObject.iconSize} className="avatar">
-      <div
-        style={{
-          textAlign: "center",
-          borderRadius: "50%",
-          color: "#fff",
-          backgroundColor: getRandomColor(),
-          verticalAlign: "center",
-          opacity: isLoaded ? 0 : 1,
-        }}
-        className="avatar_text"
-      >
-        {keyword[0].toUpperCase()}
-      </div>
-      <img
-        src={`${srcValue}`}
-        onLoad={handleLoadSuccess}
-        style={{
-          position: "absolute",
-          left: "4px",
-          top: "4px",
-          opacity: isLoaded ? 1 : 0,
-        }}
-      />
+      <img src={srcValue} onLoad={handleLoadSuccess} />
     </div>
   );
 }

@@ -41,24 +41,38 @@ export const getConfigFromStorage = async () => {
 };
 
 export const searchIconBase64FromStorage = async (key: string) => {
-  const res = (await getFromStorage("bookmarkIcon")) as {
-    bookmarkIcon: { [k: string]: string };
+  const res = (await getFromStorage("bookmarkIcons")) as {
+    bookmarkIcons: { [k: string]: string };
   };
-  if (res.bookmarkIcon) {
-    return res.bookmarkIcon[key];
+  if (res.bookmarkIcons) {
+    return res.bookmarkIcons[key];
   }
   // 不存在，则创建再返回空字符串
-  await storageSet({ bookmarkIcon: [] });
+  await storageSet({ bookmarkIcons: [] });
   return undefined;
+};
+
+const checkBookmarkIconCount = async () => {
+  const res: any = await getFromStorage("bookmarkIcons");
+  if (res?.bookmarkIcons) {
+    if (Object.keys(res.bookmarkIcons).length > 100) {
+      return storageSet({ bookmarkIcons: {} });
+    }
+  }
 };
 
 export const updateBookmarkIconData = async (key: string, value: string) => {
   return new Promise((resolve, reject) => {
     try {
-      chrome.storage.local.set({ [key]: value }, () => {
-        console.log("ok,bookmark data was updated!");
-        resolve(true);
-      });
+      // 如果缓存超过 100 条，则清空一次缓存
+      checkBookmarkIconCount()
+        .then(() => {
+          chrome.storage.local.set({ bookmarkIcons: { [key]: value } }, () => {
+            console.log("ok,bookmark data was updated!", key);
+            resolve(true);
+          });
+        })
+        .catch((error) => reject(error));
     } catch (error) {
       reject(error);
     }

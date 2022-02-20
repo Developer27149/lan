@@ -1,46 +1,103 @@
 .bookmarks-container
   position: fixed
-  margin: 1rem
-  padding: 1.2rem 0.8em
-  border-radius: 6px
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
-  border-radius: 1rem
+  transition: all 0.4s ease-in-out
+  display: flex
+  &:hover
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
 
   .bookmark_icon
-    width: 2.4rem
-    height: 2.4rem
+    width: 2rem
+    height: 2rem
+    padding: 4px
+    margin: 4px
     color: white
+    background-color: #333
     cursor: pointer
-  .add_bookmark_box
-    width: max(40vw, 600px)
-    position: fixed
-    background-color: #eee
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
-    padding: 1rem
-    color: #333
-    .inside_box      
-      input
-        display: block
-        width: 460px
-        height: 2rem
-        line-height: 2rem
-        padding: 4px 2rem
-        margin: 1rem
-        border-radius: 2rem
-        outline: none
-        border: none
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+    // border: 1px solid #33333343
+    font-size: 14px
+    border-radius: 50%
+  
 
-      .result
-        background-color: #e7e1e1
-        overflow-x: hidden
-        .result_item
-          display: flex
-          align-items: center
-          font-size: 1.1rem
-          opacity: 0.9
+.bookmarks-container[data-pos='left']
+.bookmarks-container[data-pos='right']
+  flex-direction: row-reverse
+
+.bookmarks-container[data-pos='top']
+  flex-direction: column
+.bookmarks-container[data-pos='bottom']
+  flex-direction: column-reverse
+.icon_list
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+
+
+.icon_list[data-pos="left"],.icon_list[data-pos="right"]
+  justify-content: flex-start
+  flex-direction: column
+  width: 6rem
+.icon_list[data-pos="top"],.icon_list[data-pos="bottom"]
+  height: 6rem
+  align-items: flex-start
+
+.add_bookmark_box
+  position: fixed
+  top: 25%
+  left: 50%
+  transform: translateX(-50%)
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+  color: #333
+  background-color: #fff   
+  transition: all 0.4s ease-in-out
+
+  .inside_box
+    width: 50vw   
+    overflow-x: hidden 
+    input
+      height: 2rem
+      line-height: 2rem
+      font-size: 1.4rem
+      outline: none
+      border: none
+      background-color: #3b72c5
+      color: #fff
+      padding: 12px
+      width: 100%
+      &::placeholder 
+        color: white
+        opacity: 1
+      &::-ms-input-placeholder
+        color: white
+      &::-ms-input-placeholder
+        color: white
+    
+
+    .result
+      .result_item
+        display: flex      
+        flex-wrap: nowrap    
+        align-items: center
+        font-size: 1.1rem
+        opacity: 0.9
+        .title
+          margin-right: auto 
+          max-width: 40vw                     
           a
-            text-decoration: none
-            color: #5964df
-
-
+            text-decoration: none 
+            color: #333  
+        .pick
+          cursor: pointer
+          margin: 0 1rem
+        button
+          padding: 8px 10px
+          margin: 0 20px
+          outline: none
+          // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+          cursor: pointer
+          border: 1px solid #80e190
+          background-color: #fff 
+          border-radius: 6px
+          color: green
+          font-weight: bold

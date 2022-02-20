@@ -135,21 +135,27 @@ const getAdjacent = (side: bookmarkPosType, value: number) => {
     .filter((i) => i !== filterObj[side])
     .forEach((i) => {
       res[i] = `${i === side ? value / 12 : value}px`;
+      // res[i] = `${value}px`;
     });
+  res[side] = "0";
   return res;
 };
 
 const getImgBase64FromUrl = async (url: string) => {
   try {
-    const res = await fetch(url, { method: "GET", mode: "no-cors" });
-    console.log(res, "is res data");
-
+    const res = await fetch(url, { method: "GET", mode: "cors" });
+    if (res.status !== 200) {
+      return "";
+    }
     const blob = await res.blob();
     return blobToBase64(blob);
   } catch (error) {
-    console.log(error, " is fetch url error", `url is: ${url}`);
     return "";
   }
+};
+
+const historyPush = (url: string, target = "_self") => {
+  window.open(url, target);
 };
 
 export {
@@ -165,4 +171,5 @@ export {
   createReflectMapObject,
   getAdjacent,
   getImgBase64FromUrl,
+  historyPush,
 };

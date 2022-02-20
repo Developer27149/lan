@@ -8,6 +8,7 @@ import { configState } from "../recoilRoot";
 
 export default function Search() {
   const [config] = useRecoilState(configState);
+  if (config.publicObject.hiddenSearchBox) return null;
   const {
     publicObject: { openType, engine },
   } = config;
