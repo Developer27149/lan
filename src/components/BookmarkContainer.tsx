@@ -1,8 +1,7 @@
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
-import { useState, createElement } from "react";
+import { useState, useEffect } from "react";
 import "../style/bookmarks.sass";
-import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { getAdjacent, historyPush, updateRootStateWithKeyAndValue } from "../utils/index";
 import Avatar from "./Avatar";
 import AddBookmark from "./AddBookmark";
@@ -13,9 +12,7 @@ export default function BookmarkContainer() {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
   const { showBookmark, bookmarkList, bookmarkPos, showAddIconBox } = publicObject;
-  // const [showAddBox, setShowAddBox] = useState(true);
   const { handleSwitchShowAddIconBox } = useMenu(config, setConfig);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -28,6 +25,12 @@ export default function BookmarkContainer() {
   const [contextMenuOptions, setContextMenuOptions] = useState<
     { text: string; callback: () => void }[]
   >([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setContextMenuPos({ x: -500, y: -500 });
+    }, 3000);
+  }, [contextMenuPos]);
 
   if (showBookmark) {
     return (
