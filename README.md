@@ -25,7 +25,9 @@
 
 ### 商店安装
 
-待续，正在审核
+地址是：https://chrome.google.com/webstore/detail/%E5%B2%9A/pgbomeeopmblmenapfgbhjobohpnegil
+
+传送门:[岚](https://chrome.google.com/webstore/detail/%E5%B2%9A/pgbomeeopmblmenapfgbhjobohpnegil)
 
 ### 本地安装
 
@@ -36,8 +38,6 @@
   - 打开开发者模式
   - 加载已解压文件
   - 选择解压的目录并确定
-
-
 
 #### edge 浏览器
 
