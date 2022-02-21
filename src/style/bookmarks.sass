@@ -18,7 +18,6 @@
     border-radius: 50%
   
 
-.bookmarks-container[data-pos='left']
 .bookmarks-container[data-pos='right']
   flex-direction: row-reverse
 
@@ -64,6 +63,7 @@
       background-color: #3b72c5
       color: #fff
       padding: 12px
+      padding-left: 24px
       width: 100%
       &::placeholder 
         color: white
@@ -74,8 +74,9 @@
         color: white
     
 
-    .result
+    .result      
       .result_item
+        padding: 2px 8px
         display: flex      
         flex-wrap: nowrap    
         align-items: center
@@ -91,7 +92,10 @@
             color: #333  
         .pick
           cursor: pointer
-          margin: 0 1rem
+          margin: 0 0.6rem
+          font-size: 1.1rem
+        .pen.pick
+          transform: rotateY(180deg)
         button
           padding: 8px 10px
           margin: 0 20px

@@ -7,12 +7,14 @@ import Avatar from "./Avatar";
 import AddBookmark from "./AddBookmark";
 import ContextMenu from "./ContextMenu";
 import { useMenu } from "../hooks/useMenu";
+import BookmarkEdit from "./BookmarkEdit";
 
 export default function BookmarkContainer() {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
   const { showBookmark, bookmarkList, bookmarkPos, showAddIconBox } = publicObject;
   const { handleSwitchShowAddIconBox } = useMenu(config, setConfig);
+  const [curUpdateBookmarkUrl, setCurUpdateBookmarkUrl] = useState("");
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
@@ -73,9 +75,7 @@ export default function BookmarkContainer() {
                   {
                     text: "更换图标",
                     callback: () => {
-                      updateRootStateWithKeyAndValue(setConfig, "bookmarkList", [
-                        ...bookmarkList.filter((i) => i !== url),
-                      ]);
+                      setCurUpdateBookmarkUrl(url);
                       setContextMenuPos({ x: -500, y: -500 });
                     },
                   },
@@ -86,12 +86,25 @@ export default function BookmarkContainer() {
             </div>
           ))}
         </div>
-        {showAddIconBox && <AddBookmark hiddenIt={handleSwitchShowAddIconBox} />}
+        {showAddIconBox && (
+          <AddBookmark
+            hiddenIt={handleSwitchShowAddIconBox}
+            setCurUpdateBookmarkUrl={setCurUpdateBookmarkUrl}
+          />
+        )}
         <ContextMenu
           left={contextMenuPos.x}
           top={contextMenuPos.y}
           options={contextMenuOptions}
         />
+        {curUpdateBookmarkUrl.length > 0 && (
+          <BookmarkEdit
+            href={curUpdateBookmarkUrl}
+            exitCb={() => {
+              setCurUpdateBookmarkUrl("");
+            }}
+          />
+        )}
       </div>
     );
   }

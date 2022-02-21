@@ -6,8 +6,15 @@ import { updateRootStateWithKeyAndValue } from "../utils/index.js";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 import Avatar from "./Avatar";
+import { FiEdit3 } from "react-icons/fi";
 
-export default function AddBookmark({ hiddenIt }: { hiddenIt: () => void }) {
+export default function AddBookmark({
+  hiddenIt,
+  setCurUpdateBookmarkUrl,
+}: {
+  hiddenIt: () => void;
+  setCurUpdateBookmarkUrl: (url: string) => void;
+}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [resultList, setResultList] = useState<IBookmarkItem[]>([]);
   const [config, setConfig] = useRecoilState(configState);
@@ -64,7 +71,7 @@ export default function AddBookmark({ hiddenIt }: { hiddenIt: () => void }) {
                       📌
                     </span>
                   )}
-                  <button>上传图标</button>
+                  <span className="pick pen" onClick={() => setCurUpdateBookmarkUrl(url!)}>✏️</span>
                 </div>
               );
             })}
