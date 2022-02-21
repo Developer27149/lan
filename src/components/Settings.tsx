@@ -1,55 +1,86 @@
-import { useAppContext } from "../context/index.js";
 import "../style/settings.sass";
-import { iconSize, openTypeStr } from "../types/index.js";
-import { handleStopMousemove } from "../utils/index.js";
+import {
+  createReflectMapObject,
+  handleStopMousemove,
+  updateRootStateWithKeyAndValue,
+} from "../utils/index";
 import Info from "./Info";
 import Slider from "./Slider";
 import SwitchOptions from "./SwitchOptions";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 interface IProps {
   handleSwitchShowSetting: () => void;
 }
+
+const iconMap = createReflectMapObject(["大", "中", "小"], ["lg", "md", "sm"]);
+const imgQualityMap = createReflectMapObject(
+  ["原画", "高清", "常规"],
+  ["raw", "full", "regular"]
+);
+const bookmarkPosMap = createReflectMapObject(
+  ["上", "下", "左", "右"],
+  ["top", "bottom", "left", "right"]
+);
+
 export default function Settings({ handleSwitchShowSetting }: IProps) {
-  const { state, dispatch } = useAppContext();
-  const initIconSizeEvent = (payload: iconSize) => () => {
-    dispatch({ type: "iconSize", payload });
-  };
-  const initSwitchIconsizeOption = (text: string, size: iconSize) => ({
-    text,
-    onClickEvent: initIconSizeEvent(size),
-    active: size === state.iconSize,
-  });
-  const initOpenTypeEvent = (payload: openTypeStr) => () => {
-    dispatch({ type: "openType", payload });
-  };
-  const initSwitchOpenPageStyle = (text: string, typeStr: openTypeStr) => ({
-    text,
-    onClickEvent: initOpenTypeEvent(typeStr),
-    active: typeStr === state.openType,
-  });
-  const initShowCurTimeEvent = (payload: boolean) => () => {
-    dispatch({ type: "curClock", payload });
-  };
-  const initSwitchShowCurTimeOptions = (text: string, isShowCurTime: boolean) => ({
-    text,
-    onClickEvent: initShowCurTimeEvent(isShowCurTime),
-    active: isShowCurTime === state.showCurClock,
-  });
-  // init options about icon size
-  const option1 = [
-    initSwitchIconsizeOption("小", "sm"),
-    initSwitchIconsizeOption("中", "md"),
-    initSwitchIconsizeOption("大", "lg"),
+  const [config, setConfig] = useRecoilState(configState);
+  const { publicObject } = config;
+  const {
+    iconSize,
+    openType,
+    showCurClock,
+    tomatoSeconds,
+    imgQuality,
+    showBookmark,
+    bookmarkPos,
+  } = publicObject;
+  // init switch array
+  const switchList = [
+    {
+      options: ["大", "中", "小"],
+      currentOption: iconMap[iconSize],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "iconSize", iconMap[option]),
+      title: "图标大小",
+    },
+    {
+      options: ["新页面", "当前页"],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "openType", option),
+      currentOption: openType,
+      title: "搜索页面打开方式",
+    },
+    {
+      options: ["显示", "隐藏"],
+      currentOption: showCurClock ? "显示" : "隐藏",
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "showCurClock", option === "显示"),
+      title: "左上角显示当前时间",
+    },
+    {
+      title: "画质设置",
+      options: ["原画", "高清", "常规"],
+      currentOption: imgQualityMap[imgQuality],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "imgQuality", imgQualityMap[option]),
+    },
+    {
+      title: "显示书签",
+      options: ["是", "否"],
+      currentOption: showBookmark ? "是" : "否",
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "showBookmark", option === "是"),
+    },
+    {
+      title: "书签位置",
+      options: ["上", "下", "左", "右"],
+      currentOption: bookmarkPosMap[bookmarkPos],
+      handleSwitch: (option: any) =>
+        updateRootStateWithKeyAndValue(setConfig, "bookmarkPos", bookmarkPosMap[option]),
+    },
   ];
-  // init search open style
-  const option2 = [
-    initSwitchOpenPageStyle("新页面", "新页面"),
-    initSwitchOpenPageStyle("当前页", "当前页"),
-  ];
-  // init show current time option
-  const option3 = [
-    initSwitchShowCurTimeOptions("显示", false),
-    initSwitchShowCurTimeOptions("隐藏", true),
-  ];
+
   return (
     <div
       className="settings-container"
@@ -60,12 +91,12 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
         className="settings"
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
-        <SwitchOptions options={option1} title="图标大小" />
-        <SwitchOptions options={option2} title="搜索页面打开方式" />
-        <SwitchOptions options={option3} title="左上角显示当前时间" />
+        {switchList.map((properties, idx) => (
+          <SwitchOptions {...properties} key={idx} />
+        ))}
         <div className="rest">
           <h4>番茄钟</h4>
-          <Slider value={state.tomatoSeconds} />
+          <Slider value={tomatoSeconds} />
         </div>
 
         <Info />

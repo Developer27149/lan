@@ -1,42 +1,47 @@
-import { useReducer } from "react";
+import { useRecoilState } from "recoil";
 import Clock from "./components/Clock";
 import Home from "./components/Home";
 import Menu from "./components/Menu";
 import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
-import { AppContextProvider } from "./context/index";
-import { appReducer } from "./context/reducer";
-import { iconSize, keywordType, openTypeStr } from "./types/index";
-interface IProps {
-  wallpaper: string;
-  icon_size: iconSize;
-  tomatoSeconds: number;
-  openType: openTypeStr;
-  showCurClock: boolean;
-  engine: keywordType;
-}
+import { storageDataType } from "./types/index";
+import { useEffect, useState } from "react";
+import { configState } from "./recoilRoot";
+import { getConfigFromStorage, saveConfigToStorage } from "./utils/storage";
+import BookmarkContainer from "./components/BookmarkContainer";
+import BookmarkEdit from "./components/BookmarkEdit";
 
-export default function App(props: IProps) {
-  const { wallpaper, icon_size, tomatoSeconds, openType, showCurClock, engine } = props;
+export default function App(props: { config: storageDataType }) {
+  const { config } = props;
+  const [state, setConfig] = useRecoilState(configState);
 
-  const [state, dispatch] = useReducer(appReducer, {
-    wallpaper,
-    openType,
-    showCurClock,
-    tomatoSeconds,
-    engine,
-    iconSize: icon_size,
-    showClock: false,
-  });
+  const [isRender, setIsRender] = useState(false);
+  useEffect(() => {
+    setConfig(config);
+    setIsRender(true);
+    // init debug api
+    globalThis.conf = () => {
+      getConfigFromStorage().then((res) => {
+        console.log(res.publicObject);
+      });
+    };
+  }, []);
+  useEffect(() => {
+    if (state?.publicObject) {
+      saveConfigToStorage(state);
+    }
+  }, [state]);
+  if (!isRender) return null;
   return (
-    <AppContextProvider value={{ state, dispatch }}>
+    <>
       <Home />
-      {!state.showClock && (
+      {state?.publicObject?.showClock === false ? (
         <>
           <ModifyWallpaperBtn />
           <Menu />
+          <Clock />
+          <BookmarkContainer />
         </>
-      )}
-      {!state.showCurClock && <Clock size={state.iconSize} />}
-    </AppContextProvider>
+      ) : null}
+    </>
   );
 }

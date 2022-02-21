@@ -19,8 +19,8 @@ export default React.memo(function Info() {
           <div key={key} className="keys">
             <span>{key}</span>
             <span>+</span>
-            <span>空格</span>
-            <span>=</span>
+            <span>space</span>
+            <div className="equal"></div>
             <span>
               <EngineIcon keyword={key as keywordType} />
             </span>

@@ -3,12 +3,16 @@ import { useSearch } from "../hooks/useSearch";
 import { keyword2site } from "../utils/index";
 import { keywordType } from "../types/index";
 import EngineIcon from "./EngineIcon";
-import { useAppContext } from "../context/index.js";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 
 export default function Search() {
-  const { state } = useAppContext();
+  const [config] = useRecoilState(configState);
 
-  const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } = useSearch(state.engine);
+  const {
+    publicObject: { openType, engine, hiddenSearchBox },
+  } = config;
+  const { setCurKeyword, curKeyword, visibility, inpRef, iconColor } = useSearch(engine);
 
   const [value, setValue] = useState("");
 
@@ -32,13 +36,14 @@ export default function Search() {
   const handlePressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       window.open(
-        `https://www.${keyword2site[curKeyword]}.com/search?q=${value}`,
-        state.openType === "当前页" ? "_top" : "_blank"
+        `https://www.${keyword2site[curKeyword]}.com/search?q=${encodeURIComponent(value)}`,
+        openType === "当前页" ? "_top" : "_blank"
       );
       setValue("");
     }
   };
-
+  return null;
+  if (hiddenSearchBox) return null;
   return (
     <div className="search-box" data-show={visibility}>
       <input

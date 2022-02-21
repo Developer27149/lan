@@ -1,10 +1,11 @@
 import "../style/clock.sass";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getFormatCurClock } from "../utils/index.js";
-import { IconType } from "react-icons/lib";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 
-export default React.memo(function Clock(props: { size: IconType }) {
-  const { size } = props;
+export default function Clock() {
+  const [config] = useRecoilState(configState);
   const [timeStr, setTimeStr] = useState<string>(getFormatCurClock());
   useEffect(() => {
     let id = setInterval(() => {
@@ -14,9 +15,10 @@ export default React.memo(function Clock(props: { size: IconType }) {
       clearInterval(id);
     };
   }, []);
+  if (!config?.publicObject?.showCurClock) return null;
   return (
-    <span data-size={size} className="cur-clock-container">
+    <span data-size={config.publicObject.iconSize} className="cur-clock-container">
       {timeStr}
     </span>
   );
-});
+}

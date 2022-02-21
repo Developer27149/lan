@@ -1,29 +1,34 @@
-import React, { useState } from "react";
-import { useAppContext } from "../context/index.js";
-import { getObjFromStorage } from "../utils/index.js";
 import { requestNewestWallpaper } from "../utils/unsplash";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
+import { downloadState } from "../downloadState";
 
 export default function ModifyWallpaperBtn() {
-  const { state, dispatch } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsLoading(true);
-    await requestNewestWallpaper();
-    const obj = await getObjFromStorage("wallpaper");
-    dispatch({
-      type: "wallpaper",
-      payload: obj?.wallpaper,
-    });
-    setIsLoading(false);
+  const [config, setConfig] = useRecoilState(configState);
+  const [downloadStatusData, setDownloadStatusData] = useRecoilState(downloadState);
+  const { isDownloading, progress } = downloadStatusData;
+
+  const handleClick = async () => {
+    try {
+      setDownloadStatusData({ isDownloading: true, progress: 1 });
+      requestNewestWallpaper(config, setConfig, setDownloadStatusData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
-    <button
-      className="update"
-      onClick={handleClick}
-      data-loading={isLoading.toString()}
-      data-size={state.iconSize}
-    >
-      <img src="icons/64.svg" />
-    </button>
+    <div>
+      <button
+        className="update"
+        onClick={handleClick}
+        data-loading={isDownloading.toString()}
+        data-size={config.publicObject.iconSize}
+      >
+        <img src="icons/64.svg" />
+      </button>
+      {isDownloading && (
+        <span className="download_progress" style={{ width: `${progress}vw` }}></span>
+      )}
+    </div>
   );
 }

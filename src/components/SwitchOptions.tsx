@@ -1,29 +1,28 @@
 import React from "react";
 import "../style/switchOptions.sass";
+import { getRandomColor } from "../utils/index.js";
 
 interface IProps {
-  options: {
-    text: string;
-    onClickEvent: () => void;
-    active: boolean;
-  }[];
+  options: string[];
+  currentOption: string;
+  handleSwitch: (option: string) => void;
   title: string;
 }
 export default React.memo(function SwitchOptions(props: IProps) {
-  const { options, title } = props;
+  const { options, title, currentOption, handleSwitch } = props;
   return (
-    <div className="switch-options-container">
+    <div className="switch-options-container" style={{ borderColor: getRandomColor() }}>
       <h4>{title}</h4>
       <div className="items">
-        {options.map(({ text, onClickEvent, active }, idx) => {
+        {options.map((option, idx) => {
           return (
-            <section
-              className={`${active ? "item active" : "item"}`}
-              key={text + idx}
-              onClick={onClickEvent}
+            <div
+              className={`${option === currentOption ? "item active" : "item"}`}
+              key={idx}
+              onClick={() => handleSwitch(option)}
             >
-              {text}
-            </section>
+              {option}
+            </div>
           );
         })}
       </div>

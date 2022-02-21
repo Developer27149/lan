@@ -23,5 +23,7 @@ export default defineConfig({
         watch: {},
         sourcemap: false,
       }
-    : {},
+    : {
+        sourcemap: false,
+      },
 });

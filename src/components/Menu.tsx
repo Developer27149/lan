@@ -4,25 +4,29 @@ import { RiMenuUnfoldLine } from "react-icons/ri";
 import { useMenu } from "../hooks/useMenu";
 import { useState } from "react";
 import { handleDownloadCurWallpaper } from "../utils/index";
-import { useAppContext } from "../context/index.js";
 import Settings from "./Settings";
+import { useRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
+import { AiOutlinePushpin } from "react-icons/ai";
 
 export default function Menu() {
-  const { state } = useAppContext();
-  const [showMenu, setShowMenu] = useState(false);
-  const { handleSwitchShowClock, handleSwitchShowSetting, showSetting } =
-    useMenu();
+  const [config, setConfig] = useRecoilState(configState);
+  const {
+    handleSwitchShowClock,
+    handleSwitchShowSetting,
+    showSetting,
+    iconSize,
+    showMenu,
+    setShowMenu,
+    handleSwitchShowAddIconBox,
+  } = useMenu(config, setConfig);
 
   return (
     <>
-      <div
-        className="menu"
-        data-size={state.iconSize}
-        data-shrik={`${showMenu}`}
-      >
+      <div className="menu" data-size={iconSize} data-shrink={`${showMenu}`}>
         {showMenu ? (
           <>
-            <div className="download" onClick={handleDownloadCurWallpaper}>
+            <div className="download" onClick={() => handleDownloadCurWallpaper(config)}>
               <img src="icons/save.svg" />
             </div>
             <div className="rest" onClick={handleSwitchShowClock}>
@@ -30,6 +34,9 @@ export default function Menu() {
             </div>
             <div className="setting" onClick={handleSwitchShowSetting}>
               <FcSettings />
+            </div>
+            <div onClick={handleSwitchShowAddIconBox}>
+              <AiOutlinePushpin />
             </div>
             <div onClick={() => setShowMenu(!showMenu)}>
               <RiMenuUnfoldLine />
@@ -41,9 +48,7 @@ export default function Menu() {
           </div>
         )}
       </div>
-      {showSetting && (
-        <Settings handleSwitchShowSetting={handleSwitchShowSetting} />
-      )}
+      {showSetting && <Settings handleSwitchShowSetting={handleSwitchShowSetting} />}
     </>
   );
 }
