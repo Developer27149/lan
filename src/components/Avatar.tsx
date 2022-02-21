@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import "../style/avatar.sass";
 import { configState } from "../recoilRoot";
 import { useEffect, useState } from "react";
@@ -9,15 +9,18 @@ interface IProps {
   href: string;
 }
 export default function Avatar({ href }: IProps) {
-  const config = useRecoilValue(configState);
+  const [config] = useRecoilState(configState);
   const [srcValue, setSrcValue] = useState("");
   const [opacity, setOpacity] = useState(0);
   const [isStorageUrl, setIsStorageUrl] = useState(false);
   useEffect(() => {
-    (async () => {
+    const asyncTask = async () => {
       try {
         const { origin, hostname } = new URL(href);
         const urlRecordFromStorage = await searchIconBase64FromStorage(hostname);
+        console.log(`url from storage is:`, urlRecordFromStorage);
+        console.log("hostname is:", hostname);
+
         if (urlRecordFromStorage) {
           setSrcValue(urlRecordFromStorage);
           setIsStorageUrl(true);
@@ -29,8 +32,17 @@ export default function Avatar({ href }: IProps) {
       } catch (error) {
         console.log("load failed...", error);
       }
-    })();
-  }, []);
+    };
+    console.log(
+      srcValue === "",
+      "*".repeat(10),
+      config.publicObject.updateBookmarkIconUrl === href
+    );
+
+    if (srcValue === "" || config.publicObject.updateBookmarkIconUrl === href) {
+      asyncTask();
+    }
+  }, [config, srcValue]);
 
   const handleLoadSuccess = () => {
     setOpacity(1);

@@ -31,7 +31,7 @@ export default function BookmarkContainer() {
   useEffect(() => {
     setTimeout(() => {
       setContextMenuPos({ x: -500, y: -500 });
-    }, 3000);
+    }, 6000);
   }, [contextMenuPos]);
 
   if (showBookmark) {

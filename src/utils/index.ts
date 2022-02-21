@@ -1,5 +1,10 @@
 import _ from "lodash";
-import { bookmarkPosType, downloadStateType, storageDataType } from "../types/index.js";
+import {
+  bookmarkPosType,
+  downloadStateType,
+  publicObjectType,
+  storageDataType,
+} from "../types/index.js";
 import { SetterOrUpdater } from "recoil";
 
 const getWallpaperBase64 = async () => {
@@ -96,7 +101,7 @@ const getFormatCurClock = () => {
 
 const updateRootStateWithKeyAndValue = (
   setConfig: SetterOrUpdater<storageDataType>,
-  key: any,
+  key: "historyId" | keyof publicObjectType,
   value: any
 ) => {
   setConfig((prevConfig) => {

@@ -58,6 +58,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         showClock: false,
         hiddenSearchBox: false,
         showAddIconBox: false,
+        updateBookmarkIconUrl: "",
       },
       historyId: [],
     };
