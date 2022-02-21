@@ -18,9 +18,6 @@ export default function Avatar({ href }: IProps) {
       try {
         const { origin, hostname } = new URL(href);
         const urlRecordFromStorage = await searchIconBase64FromStorage(hostname);
-        console.log(`url from storage is:`, urlRecordFromStorage);
-        console.log("hostname is:", hostname);
-
         if (urlRecordFromStorage) {
           setSrcValue(urlRecordFromStorage);
           setIsStorageUrl(true);
@@ -33,12 +30,6 @@ export default function Avatar({ href }: IProps) {
         console.log("load failed...", error);
       }
     };
-    console.log(
-      srcValue === "",
-      "*".repeat(10),
-      config.publicObject.updateBookmarkIconUrl === href
-    );
-
     if (srcValue === "" || config.publicObject.updateBookmarkIconUrl === href) {
       asyncTask();
     }

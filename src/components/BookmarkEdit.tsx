@@ -126,10 +126,9 @@ export default function BookmarkEdit({ exitCb, href }: IProps) {
                 paddingTop: "8px",
                 cursor: "pointer",
               }}
-              onClick={() => {
+              onClick={async () => {
                 // 更新数据
-                console.log('update data');                
-                updateBookmarkIconData(hostname, uploadImgSrc);
+                await updateBookmarkIconData(hostname, uploadImgSrc);
                 updateRootStateWithKeyAndValue(setConfig, "updateBookmarkIconUrl", href);
                 exitCb();
               }}
