@@ -17,7 +17,10 @@ export type publicObjectType = {
   showClock: boolean;
   showBookmark: boolean;
   bookmarkPos: bookmarkPosType;
-  bookmarkList: string[];
+  bookmarkList: {
+    url: string;
+    title: string;
+  }[];
   hiddenSearchBox: boolean;
   showAddIconBox: boolean;
   updateBookmarkIconUrl: string;

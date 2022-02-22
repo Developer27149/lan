@@ -29,7 +29,7 @@ export default function App(props: { config: storageDataType }) {
       saveConfigToStorage(state);
     }
   }, [state]);
-  if (!isRender) return "";
+  if (!isRender) return null;
   return (
     <>
       <Home />

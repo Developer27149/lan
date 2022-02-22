@@ -15,7 +15,7 @@ interface IProps {
 export default function BookmarkEdit({ exitCb, href }: IProps) {
   const setConfig = useSetRecoilState(configState);
   const [uploadImgSrc, setUploadImgSrc] = useState("");
-  const [info, setInfo] = useState("上传32*32像素的 png 或 svg 图标");
+  const [info, setInfo] = useState("建议上传32*32像素的png/svg图片");
   const [isError, setIsError] = useState(false);
   const urlObj = new URL(href);
   const { hostname } = urlObj;

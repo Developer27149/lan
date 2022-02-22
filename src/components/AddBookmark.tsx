@@ -31,10 +31,10 @@ export default function AddBookmark({
     }
   }, 500);
 
-  const handlePickItToHomepage = (url: string) => {
+  const handlePickItToHomepage = (url: string, title: string) => {
     updateRootStateWithKeyAndValue(setConfig, "bookmarkList", [
-      ...bookmarkList.filter((i) => i !== url),
-      url,
+      ...bookmarkList.filter((i) => i.url !== url),
+      { url, title },
     ]);
   };
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function AddBookmark({
             .map(({ id, title, url }) => {
               return (
                 <div key={id} className="result_item">
-                  <Avatar href={url!} />
+                  <Avatar href={url!} title={title} />
                   <span className="title">
                     <a href={url}>
                       {title.slice(0, 54)}
@@ -66,12 +66,14 @@ export default function AddBookmark({
                     </a>
                   </span>
 
-                  {!bookmarkList.includes(url!) && (
-                    <span className="pick" onClick={() => handlePickItToHomepage(url!)}>
+                  {!bookmarkList.some((i) => i.url === url) && (
+                    <span className="pick" onClick={() => handlePickItToHomepage(url!, title)}>
                       📌
                     </span>
                   )}
-                  <span className="pick pen" onClick={() => setCurUpdateBookmarkUrl(url!)}>✏️</span>
+                  <span className="pick pen" onClick={() => setCurUpdateBookmarkUrl(url!)}>
+                    ✏️
+                  </span>
                 </div>
               );
             })}

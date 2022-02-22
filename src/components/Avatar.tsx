@@ -7,8 +7,9 @@ import { updateBookmarkIconData, searchIconBase64FromStorage } from "../utils/st
 
 interface IProps {
   href: string;
+  title: string;
 }
-export default function Avatar({ href }: IProps) {
+export default function Avatar({ href, title }: IProps) {
   const [config] = useRecoilState(configState);
   const [srcValue, setSrcValue] = useState("");
   const [opacity, setOpacity] = useState(0);
@@ -51,7 +52,7 @@ export default function Avatar({ href }: IProps) {
       })();
   };
   return (
-    <div data-size={config.publicObject.iconSize} className="avatar">
+    <div data-size={config.publicObject.iconSize} className="avatar" title={title}>
       <img src={srcValue} onLoad={handleLoadSuccess} style={{ opacity }} />
     </div>
   );

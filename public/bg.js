@@ -53,7 +53,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         currentWallpaperQuality: "regular",
         wallpaperBase64: "",
         showBookmark: true,
-        bookmarkPos: "left",
+        bookmarkPos: "bottom",
         bookmarkList: [],
         showClock: false,
         hiddenSearchBox: false,
