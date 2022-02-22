@@ -27,15 +27,13 @@ const requestNewestWallpaper = async (
         urls: { raw: string; full: string; regular: string };
       };
       // 根据地址获取当前级别的图像
-      const wallpaperBase64 = await getWallpaperBase64FromUrl(
-        urls[imgQuality],
-        setDownloadStatusData
-      );
+      const imageUrl = urls[imgQuality];
+      const wallpaperBase64 = await getWallpaperBase64FromUrl(imageUrl, setDownloadStatusData);
       if (wallpaperBase64 !== "") {
         // 下载好了
         setConfig({
           historyId: [...historyId, id],
-          publicObject: { ...publicObject, wallpaperBase64, wallpaperPage },
+          publicObject: { ...publicObject, wallpaperBase64, wallpaperPage, imageUrls: urls },
         });
       }
     } else {

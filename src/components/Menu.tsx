@@ -32,11 +32,11 @@ export default function Menu() {
             <div className="rest" onClick={handleSwitchShowClock}>
               <img src="icons/rest_tomato.svg" />
             </div>
-            <div className="setting" onClick={handleSwitchShowSetting}>
-              <FcSettings />
-            </div>
             <div onClick={handleSwitchShowAddIconBox}>
               <AiOutlinePushpin />
+            </div>
+            <div className="setting" onClick={handleSwitchShowSetting}>
+              <FcSettings />
             </div>
             <div onClick={() => setShowMenu(!showMenu)}>
               <RiMenuUnfoldLine />

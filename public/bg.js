@@ -49,7 +49,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         showCurClock: true,
         openType: "新页面",
         imgQuality: "regular",
-        imageUrl: "",
+        imageUrls: { raw: "", full: "", regular: "" },
         currentWallpaperQuality: "regular",
         wallpaperBase64: "",
         showBookmark: true,
@@ -65,11 +65,14 @@ chrome.runtime.onInstalled.addListener(async () => {
     try {
       const res = await fetch(url);
       const jsonData = await res.json();
-      const { id, urls } = jsonData[0];
+      const {
+        id,
+        urls: { full, raw, regular },
+      } = jsonData[0];
       // 将初始化壁纸的 id 和 base64 字符串全部存入 storage
-      config.publicObject.wallpaperBase64 = await getBase64DataFromUrl(urls.regular);
+      config.publicObject.wallpaperBase64 = await getBase64DataFromUrl(regular);
       config.historyId = [id];
-      config.publicObject.imageUrl = urls.full;
+      config.publicObject.imageUrls = { full, regular, raw };
     } catch (error) {
       console.log(error);
     } finally {

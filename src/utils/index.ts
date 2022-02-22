@@ -2,6 +2,7 @@ import _ from "lodash";
 import {
   bookmarkPosType,
   downloadStateType,
+  imgQualityType,
   publicObjectType,
   storageDataType,
 } from "../types/index.js";
@@ -163,6 +164,12 @@ const historyPush = (url: string, target = "_self") => {
   window.open(url, target);
 };
 
+const imgQualityRiseCompare = (a: imgQualityType, b: imgQualityType) => {
+  if (a === "regular" && b !== "regular") return true;
+  if (a === "full" && b === "raw") return true;
+  return false;
+};
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -177,4 +184,5 @@ export {
   getAdjacent,
   getImgBase64FromUrl,
   historyPush,
+  imgQualityRiseCompare,
 };

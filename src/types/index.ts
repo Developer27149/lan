@@ -13,7 +13,7 @@ export type publicObjectType = {
   tomatoSeconds: number;
   showCurClock: boolean;
   wallpaperBase64: string;
-  imageUrl: string;
+  imageUrls: Record<imgQualityType, string>;
   showClock: boolean;
   showBookmark: boolean;
   bookmarkPos: bookmarkPosType;
