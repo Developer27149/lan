@@ -78,7 +78,7 @@ const handleDownloadCurWallpaper = (config: storageDataType) => {
     url:
       config.publicObject.currentWallpaperQuality === "raw"
         ? config.publicObject.wallpaperBase64
-        : config.publicObject.imageUrl,
+        : config.publicObject.imageUrls.raw,
   });
 };
 
