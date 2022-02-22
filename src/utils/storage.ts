@@ -58,6 +58,8 @@ const checkBookmarkIconCount = async () => {
     if (Object.keys(res.bookmarkIcons).length > 100) {
       return storageSet({ bookmarkIcons: {} });
     }
+  } else {
+    return storageSet({ bookmarkIcons: {} });
   }
 };
 
@@ -67,9 +69,13 @@ export const updateBookmarkIconData = async (key: string, value: string) => {
       // 如果缓存超过 100 条，则清空一次缓存
       checkBookmarkIconCount()
         .then(() => {
-          chrome.storage.local.set({ bookmarkIcons: { [key]: value } }, () => {
-            console.log("ok,bookmark data was updated!", key);
-            resolve(true);
+          getFromStorage("bookmarkIcons").then((res) => {
+            const { bookmarkIcons = {} } = res as any;
+            const newData = { bookmarkIcons: { ...bookmarkIcons, [key]: value } };
+            chrome.storage.local.set(newData, () => {
+              console.log("ok,bookmark data was updated!", newData);
+              resolve(true);
+            });
           });
         })
         .catch((error) => reject(error));

@@ -4,14 +4,18 @@ import { IoIosAdd } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
 import { ImCool } from "react-icons/im";
 import { updateBookmarkIconData } from "../utils/storage.js";
+import { updateRootStateWithKeyAndValue } from "../utils/index.js";
+import { useSetRecoilState } from "recoil";
+import { configState } from "../recoilRoot";
 
 interface IProps {
   href: string;
   exitCb: () => void;
 }
 export default function BookmarkEdit({ exitCb, href }: IProps) {
+  const setConfig = useSetRecoilState(configState);
   const [uploadImgSrc, setUploadImgSrc] = useState("");
-  const [info, setInfo] = useState("上传32*32像素的 png 或 svg 图标");
+  const [info, setInfo] = useState("建议上传32*32像素的png/svg图片");
   const [isError, setIsError] = useState(false);
   const urlObj = new URL(href);
   const { hostname } = urlObj;
@@ -122,9 +126,10 @@ export default function BookmarkEdit({ exitCb, href }: IProps) {
                 paddingTop: "8px",
                 cursor: "pointer",
               }}
-              onClick={() => {
+              onClick={async () => {
                 // 更新数据
-                updateBookmarkIconData(hostname, uploadImgSrc);
+                await updateBookmarkIconData(hostname, uploadImgSrc);
+                updateRootStateWithKeyAndValue(setConfig, "updateBookmarkIconUrl", href);
                 exitCb();
               }}
             />

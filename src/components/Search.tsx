@@ -42,7 +42,6 @@ export default function Search() {
       setValue("");
     }
   };
-  return null;
   if (hiddenSearchBox) return null;
   return (
     <div className="search-box" data-show={visibility}>

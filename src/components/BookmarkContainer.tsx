@@ -31,7 +31,7 @@ export default function BookmarkContainer() {
   useEffect(() => {
     setTimeout(() => {
       setContextMenuPos({ x: -500, y: -500 });
-    }, 3000);
+    }, 6000);
   }, [contextMenuPos]);
 
   if (showBookmark) {
@@ -48,18 +48,16 @@ export default function BookmarkContainer() {
           className="icon_list"
           data-pos={bookmarkPos}
         >
-          {bookmarkList.map((url) => (
+          {bookmarkList.map(({ url, title }) => (
             <div
               style={{
                 cursor: "pointer",
                 borderRadius: "50%",
-                backgroundColor: "#ffffff75",
+                backgroundColor: "#d5e3e938",
                 margin: "4px",
               }}
               key={url}
-              // onClick={() => historyPush(url, openType === "新页面" ? "_blank" : "_self")}
               onContextMenu={(e: React.MouseEvent<HTMLDivElement>) => {
-                console.log(e);
                 const { screenX, screenY } = e;
                 setContextMenuPos({ x: screenX, y: screenY });
                 setContextMenuOptions([
@@ -67,7 +65,7 @@ export default function BookmarkContainer() {
                     text: "取走",
                     callback: () => {
                       updateRootStateWithKeyAndValue(setConfig, "bookmarkList", [
-                        ...bookmarkList.filter((i) => i !== url),
+                        ...bookmarkList.filter((i) => i.url !== url),
                       ]);
                       setContextMenuPos({ x: -500, y: -500 });
                     },
@@ -82,7 +80,7 @@ export default function BookmarkContainer() {
                 ]);
               }}
             >
-              <Avatar href={url} />
+              <Avatar href={url} title={title} />
             </div>
           ))}
         </div>

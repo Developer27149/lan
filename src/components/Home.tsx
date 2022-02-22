@@ -40,7 +40,9 @@ export default function Home() {
   return (
     <main style={bgImgUrl} className="main">
       {config?.publicObject?.showClock && <TomatoTime />}
-      {!config?.publicObject?.hiddenSearchBox && <Search />}
+      {!config?.publicObject?.hiddenSearchBox && config?.publicObject?.showClock === false && (
+        <Search />
+      )}
     </main>
   );
 }

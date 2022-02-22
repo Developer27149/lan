@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import "../style/avatar.sass";
 import { configState } from "../recoilRoot";
 import { useEffect, useState } from "react";
@@ -7,14 +7,15 @@ import { updateBookmarkIconData, searchIconBase64FromStorage } from "../utils/st
 
 interface IProps {
   href: string;
+  title: string;
 }
-export default function Avatar({ href }: IProps) {
-  const config = useRecoilValue(configState);
+export default function Avatar({ href, title }: IProps) {
+  const [config] = useRecoilState(configState);
   const [srcValue, setSrcValue] = useState("");
   const [opacity, setOpacity] = useState(0);
   const [isStorageUrl, setIsStorageUrl] = useState(false);
   useEffect(() => {
-    (async () => {
+    const asyncTask = async () => {
       try {
         const { origin, hostname } = new URL(href);
         const urlRecordFromStorage = await searchIconBase64FromStorage(hostname);
@@ -29,8 +30,11 @@ export default function Avatar({ href }: IProps) {
       } catch (error) {
         console.log("load failed...", error);
       }
-    })();
-  }, []);
+    };
+    if (srcValue === "" || config.publicObject.updateBookmarkIconUrl === href) {
+      asyncTask();
+    }
+  }, [config, srcValue]);
 
   const handleLoadSuccess = () => {
     setOpacity(1);
@@ -48,7 +52,7 @@ export default function Avatar({ href }: IProps) {
       })();
   };
   return (
-    <div data-size={config.publicObject.iconSize} className="avatar">
+    <div data-size={config.publicObject.iconSize} className="avatar" title={title}>
       <img src={srcValue} onLoad={handleLoadSuccess} style={{ opacity }} />
     </div>
   );

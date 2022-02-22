@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
 import { getConfigFromStorage, saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
-import BookmarkEdit from "./components/BookmarkEdit";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
