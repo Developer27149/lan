@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
 import { getConfigFromStorage, saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
+import { updateRootStateWithKeyAndValue } from "./utils/index.js";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
@@ -15,14 +16,16 @@ export default function App(props: { config: storageDataType }) {
 
   const [isRender, setIsRender] = useState(false);
   useEffect(() => {
+    // init config reciol state
     setConfig(config);
+    updateRootStateWithKeyAndValue(setConfig, "showAddIconBox", false);
     setIsRender(true);
     // init debug api
-    globalThis.conf = () => {
-      getConfigFromStorage().then((res) => {
-        console.log(res.publicObject);
-      });
-    };
+    // globalThis.conf = () => {
+    //   getConfigFromStorage().then((res) => {
+    //     console.log(res.publicObject);
+    //   });
+    // };
   }, []);
   useEffect(() => {
     if (state?.publicObject) {

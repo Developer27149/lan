@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import "../style/avatar.sass";
 import { configState } from "../recoilRoot";
 import { useEffect, useState } from "react";
-import { getImgBase64FromUrl } from "../utils/index.js";
+import { getImgBase64FromUrl, historyPush } from "../utils/index";
 import { updateBookmarkIconData, searchIconBase64FromStorage } from "../utils/storage";
 
 interface IProps {
@@ -51,8 +51,14 @@ export default function Avatar({ href, title }: IProps) {
         } catch (e) {}
       })();
   };
+
   return (
-    <div data-size={config.publicObject.iconSize} className="avatar" title={title}>
+    <div
+      data-size={config.publicObject.iconSize}
+      className="avatar"
+      title={title}
+      onClick={() => historyPush(href)}
+    >
       <img src={srcValue} onLoad={handleLoadSuccess} style={{ opacity }} />
     </div>
   );

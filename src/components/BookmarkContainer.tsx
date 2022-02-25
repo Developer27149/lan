@@ -33,7 +33,6 @@ export default function BookmarkContainer() {
       setContextMenuPos({ x: -500, y: -500 });
     }, 6000);
   }, [contextMenuPos]);
-
   if (showBookmark) {
     return (
       <div
