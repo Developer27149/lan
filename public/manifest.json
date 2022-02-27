@@ -1,7 +1,7 @@
 {
   "name": "岚",
   "description": "极简的新标签页插件，献给喜欢壁纸和极简风格的你。",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "manifest_version": 3,
   "permissions": ["storage", "downloads", "unlimitedStorage", "bookmarks"],
   "icons": {
