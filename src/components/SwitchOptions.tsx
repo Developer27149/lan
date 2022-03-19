@@ -1,6 +1,5 @@
 import React from "react";
 import "../style/switchOptions.sass";
-import { getRandomColor } from "../utils/index.js";
 
 interface IProps {
   options: string[];
@@ -11,7 +10,7 @@ interface IProps {
 export default React.memo(function SwitchOptions(props: IProps) {
   const { options, title, currentOption, handleSwitch } = props;
   return (
-    <div className="switch-options-container" style={{ borderColor: getRandomColor() }}>
+    <div className="switch-options-container" style={{ borderColor: "#7f7fd585" }}>
       <h4>{title}</h4>
       <div className="items">
         {options.map((option, idx) => {

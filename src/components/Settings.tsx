@@ -9,6 +9,7 @@ import Slider from "./Slider";
 import SwitchOptions from "./SwitchOptions";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
+import { memo } from "react";
 interface IProps {
   handleSwitchShowSetting: () => void;
 }
@@ -23,7 +24,7 @@ const bookmarkPosMap = createReflectMapObject(
   ["top", "bottom", "left", "right"]
 );
 
-export default function Settings({ handleSwitchShowSetting }: IProps) {
+export default memo(function Settings({ handleSwitchShowSetting }: IProps) {
   const [config, setConfig] = useRecoilState(configState);
   const { publicObject } = config;
   const {
@@ -103,4 +104,4 @@ export default function Settings({ handleSwitchShowSetting }: IProps) {
       </div>
     </div>
   );
-}
+});
