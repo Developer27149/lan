@@ -8,6 +8,7 @@ import {
   imgQualityRiseCompare,
   updateRootStateWithKeyAndValue,
 } from "../utils/index.js";
+import BingWallpaperBox from "./BingWallpaper";
 
 export default function Home() {
   const [config, setConfig] = useRecoilState(configState);
@@ -51,6 +52,7 @@ export default function Home() {
       {!config?.publicObject?.hiddenSearchBox && config?.publicObject?.showClock === false && (
         <Search />
       )}
+      <BingWallpaperBox />
     </main>
   );
 }
