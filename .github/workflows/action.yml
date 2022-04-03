@@ -10,10 +10,11 @@ jobs:
       # 准备源码
       - name: 检出代码
         uses: actions/checkout@v2
-      - name: 构建并压缩
-        uses: actions/setup-node@master
-      - run: npm install
-      - run: npm build
+      - name: 安装yarn 环境
+        uses: borales/actions-yarn@v2.3.0
+      - run: yarn add
+      - run: yarn build
+
       - name: 上传共享的数据
         uses: actions/upload-artifact@v2
         with:
