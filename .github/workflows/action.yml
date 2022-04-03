@@ -1,8 +1,6 @@
 name: 自动打包发布
 on:
   push:
-    branches:
-      - "main"
     tags:
       - "v*"
 jobs:
