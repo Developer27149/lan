@@ -2,10 +2,10 @@ name: 自动打包发布
 on:
   push:
     branches:
-      - [main]
+      - "main"
   pull_request:
     branches:
-      - [main]
+      - "main"
 jobs:
   build-dist:
     name: 构建 chrome 扩展程序安装包
