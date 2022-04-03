@@ -13,6 +13,7 @@ import { useRecoilState } from "recoil";
 import { configState } from "../../recoilRoot";
 import { downloadState } from "../../downloadState";
 import { bingComponentState } from "../../bingWallpaperState";
+import ReactTp from "react-tooltip";
 
 export default function BingWallpaperBox() {
   const [_, setDownloadStatusData] = useRecoilState(downloadState);
@@ -55,6 +56,7 @@ export default function BingWallpaperBox() {
 
   return (
     <div className="bing-container" onClick={onClickContainer}>
+      <ReactTp id="img-tip" />
       <div className="main" data-count={loadCount}>
         {!isEmptyObj(bingState.data) &&
           bingState.data?.images.map((img, idx) => {
@@ -69,6 +71,8 @@ export default function BingWallpaperBox() {
                     e.stopPropagation();
                     setActiveIdx(idx === activeIdx ? -1 : idx);
                   }}
+                  data-for="img-tip"
+                  data-tip="放大看看？"
                 />
                 {loadCount === 6 && (
                   <span

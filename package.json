@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "export DEV=dev && tsc && vite build",
-    "build": "rm -rf dist && tsc && vite build && uglifyjs dist/bg.js -o dist/bg.js && uglifyjs dist/once.js -o dist/once.js",
+    "build": "rm -rf dist && tsc && vite build && uglifyjs dist/bg.js -o dist/bg.js",
     "preview": "vite preview"
   },
   "dependencies": {
     "@shihengtech/hooks": "^0.0.16",
     "classnames": "^2.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "dayjs": "^1.11.0",
+    "react": "17",
+    "react-dom": "17",
+    "react-tooltip": "^4.2.21",
     "recoil": "^0.6.1"
   },
   "devDependencies": {

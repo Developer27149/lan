@@ -1,4 +1,6 @@
 import _ from "lodash";
+import dayjs from "dayjs";
+
 import {
   bookmarkPosType,
   downloadStateType,
@@ -174,7 +176,26 @@ const isUHDScreen = () => window.innerWidth * window.devicePixelRatio > 1920;
 
 const isEmptyObj = (obj: Object) => Object.keys(obj).length === 0;
 
+const getTodayDateTip = () => {
+  const time = dayjs();
+  return (
+    {
+      2: "狗命要紧💊",
+      4: "明天不上班，真的",
+      6: "早啊",
+      7: "早啊",
+      9: "你刚刚打算干啥来着？",
+      11: "先吃饭再说",
+      14: "继续开足火力",
+      18: "下班？",
+      23: "又熬夜？",
+      0: "又熬夜？",
+    }[time.hour()] ?? time.format("YYYY年MM月DD日")
+  );
+};
+
 export {
+  getTodayDateTip,
   keyword2site,
   getWallpaperBase64,
   getRandomColor,

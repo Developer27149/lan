@@ -2,7 +2,8 @@ import { requestNewestWallpaper } from "../utils/unsplash";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 import { downloadState } from "../downloadState";
-import { updateRootStateWithKeyAndValue } from "../utils/index.js";
+import { updateRootStateWithKeyAndValue } from "../utils";
+import ReactTooltip from "react-tooltip";
 
 export default function ModifyWallpaperBtn() {
   const [config, setConfig] = useRecoilState(configState);
@@ -25,11 +26,14 @@ export default function ModifyWallpaperBtn() {
   };
   return (
     <div>
+      <ReactTooltip place="right" id="change-wp" />
       <button
         className="update"
         onClick={handleClick}
         data-loading={isDownloading.toString()}
         data-size={config.publicObject.iconSize}
+        data-tip="换一个心情？"
+        data-for="change-wp"
       >
         <img src="icons/64.svg" />
       </button>
