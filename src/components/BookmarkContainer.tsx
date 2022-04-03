@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 import { useState, useEffect } from "react";
 import "../style/bookmarks.sass";
-import { getAdjacent, historyPush, updateRootStateWithKeyAndValue } from "../utils/index";
+import { getAdjacent, updateRootStateWithKeyAndValue } from "../utils/index";
 import Avatar from "./Avatar";
 import AddBookmark from "./AddBookmark";
 import ContextMenu from "./ContextMenu";

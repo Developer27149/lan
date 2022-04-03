@@ -13,7 +13,7 @@ import ReactTooltip from "react-tooltip";
 
 export default function Menu() {
   const [config, setConfig] = useRecoilState(configState);
-  const [_, setBingState] = useRecoilState(bingComponentState);
+  const setBingState = useRecoilState(bingComponentState)[1];
   const {
     handleSwitchShowClock,
     handleSwitchShowSetting,

@@ -10,7 +10,7 @@ export default function Clock() {
   const [timeStr, setTimeStr] = useState<string>(getFormatCurClock());
 
   useEffect(() => {
-    let id = setInterval(() => {
+    const id = setInterval(() => {
       setTimeStr(getFormatCurClock());
     }, 1000);
     return () => {

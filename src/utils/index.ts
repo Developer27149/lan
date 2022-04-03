@@ -29,7 +29,7 @@ const getRandomColor = () => {
 };
 
 function blobToBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, _) => {
+  return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result as string);
     reader.readAsDataURL(blob);
@@ -42,12 +42,12 @@ const getWallpaperBase64FromUrl = async (
 ) => {
   try {
     const res = await fetch(url);
-    const reader = res.body?.getReader()!;
+    const reader = res?.body?.getReader();
     const contentLength = +(res.headers.get("Content-Length") as string | number);
     let receivedLength = 0;
     const chunks = [];
-    while (true) {
-      const { done, value } = await reader?.read();
+    while (reader) {
+      const { done, value } = await reader.read();
       if (done) {
         setDownloadStatusData({
           isDownloading: false,
@@ -56,7 +56,7 @@ const getWallpaperBase64FromUrl = async (
         break;
       }
       chunks.push(value);
-      receivedLength += value!.length;
+      receivedLength += value.length;
       const percent = (receivedLength / contentLength) * 100;
       setDownloadStatusData({
         isDownloading: true,
@@ -174,7 +174,7 @@ const imgQualityRiseCompare = (a: imgQualityType, b: imgQualityType) => {
 
 const isUHDScreen = () => window.innerWidth * window.devicePixelRatio > 1920;
 
-const isEmptyObj = (obj: Object) => Object.keys(obj).length === 0;
+const isEmptyObj = (obj: object) => Object.keys(obj).length === 0;
 
 const getTodayDateTip = () => {
   const time = dayjs();

@@ -42,4 +42,4 @@ export type downloadStateType = {
   progress: number;
 };
 
-export interface IBookmarkItem extends chrome.bookmarks.BookmarkTreeNode {}
+export type IBookmarkItem = chrome.bookmarks.BookmarkTreeNode;

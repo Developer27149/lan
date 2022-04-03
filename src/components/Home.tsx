@@ -31,6 +31,7 @@ export default function Home() {
     let isCancel = false;
     const updateWallpaper = async () => {
       if (!isCancel) {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         const newImgBase64 = await getWallpaperBase64FromUrl(imageUrls[imgQuality], () => {});
         updateRootStateWithKeyAndValue(setConfig, "wallpaperBase64", newImgBase64);
         updateRootStateWithKeyAndValue(setConfig, "currentWallpaperQuality", "full");

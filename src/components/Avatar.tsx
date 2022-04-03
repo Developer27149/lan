@@ -48,7 +48,9 @@ export default function Avatar({ href, title }: IProps) {
             // 保存到 storage
             updateBookmarkIconData(hostname, base64Str!);
           }
-        } catch (e) {}
+        } catch (e) {
+          console.log(e);
+        }
       })();
   };
 

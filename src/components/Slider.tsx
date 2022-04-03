@@ -5,7 +5,8 @@ import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 
 export default function Slider(props: sliderProps) {
-  let { value, min = 1, max = 40 } = props;
+  const { min = 1, max = 40 } = props;
+  let { value } = props;
   if (value / 60 > max) {
     value = min;
   }

@@ -1,1 +1,1 @@
-declare var conf: Function;
+declare const conf: () => void;

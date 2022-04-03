@@ -22,8 +22,3 @@ export const search = async (query: string) => {
     }
   });
 };
-
-export const covertWordToBase64Icon = (char: string) => {
-  const uid = `${(Math.random() * 10).toFixed(8)}_${char}`;
-  
-};

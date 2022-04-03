@@ -36,16 +36,13 @@ export default React.memo(function Info() {
         </span>
         <p className="or">🤔 &nbsp; or</p>
         <div className="links">
-          <a target="_blank" href="https://github.com/youyiqin/lan">
+          <a href="https://github.com/youyiqin/lan">
             <GrGithub />
           </a>
-          <a target="_blank" href="https://twitter.com/miaocai0">
+          <a href="https://twitter.com/miaocai0">
             <GrTwitter />
           </a>
-          <a
-            target="_blank"
-            href="https://avatars.githubusercontent.com/u/23721611?s=400&u=81b71a625223490a477903d8154db4b64caa4c54&v=4"
-          >
+          <a href="https://avatars.githubusercontent.com/u/23721611?s=400&u=81b71a625223490a477903d8154db4b64caa4c54&v=4">
             <AiOutlineWechat />
           </a>
         </div>

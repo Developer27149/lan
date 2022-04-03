@@ -6,7 +6,6 @@ import { updateRootStateWithKeyAndValue } from "../utils/index.js";
 import { useRecoilState } from "recoil";
 import { configState } from "../recoilRoot";
 import Avatar from "./Avatar";
-import { FiEdit3 } from "react-icons/fi";
 
 export default function AddBookmark({
   hiddenIt,

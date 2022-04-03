@@ -1,6 +1,6 @@
 import { storageDataType } from "../types";
 
-export const storageSet = async (obj: Object) => {
+export const storageSet = async (obj: object) => {
   return new Promise((resolve, reject) => {
     try {
       if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
