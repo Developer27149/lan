@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../style/BookmarkEdit.sass";
+import "../style/bookmarkEdit.sass";
 import { IoIosAdd } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
 import { ImCool } from "react-icons/im";
