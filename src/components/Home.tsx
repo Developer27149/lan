@@ -9,9 +9,11 @@ import {
   updateRootStateWithKeyAndValue,
 } from "../utils/index.js";
 import BingWallpaperBox from "./BingWallpaper";
+import { bingComponentState } from "../bingWallpaperState";
 
 export default function Home() {
   const [config, setConfig] = useRecoilState(configState);
+  const [bingState, setBingState] = useRecoilState(bingComponentState);
   const {
     publicObject: { wallpaperBase64, imageUrls, currentWallpaperQuality, imgQuality },
   } = config;
@@ -46,13 +48,21 @@ export default function Home() {
     };
   }, [wallpaperBase64, imgQuality]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.metaKey && e.key === ".") {
+        setBingState((oldState) => ({ ...oldState, show: !oldState.show }));
+      }
+    });
+  }, []);
+
   return (
     <main style={bgImgUrl} className="main">
       {config?.publicObject?.showClock && <TomatoTime />}
       {!config?.publicObject?.hiddenSearchBox && config?.publicObject?.showClock === false && (
         <Search />
       )}
-      <BingWallpaperBox />
+      {bingState.show && <BingWallpaperBox />}
     </main>
   );
 }

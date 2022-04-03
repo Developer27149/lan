@@ -2,12 +2,13 @@
   "name": "lan",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build:dev": "export DEV=dev && tsc && vite build",
+    "dev": "export DEV=dev && tsc && vite build",
     "build": "tsc && vite build && uglifyjs dist/bg.js -o dist/bg.js && uglifyjs dist/once.js -o dist/once.js",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@shihengtech/hooks": "^0.0.16",
+    "classnames": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "recoil": "^0.6.1"

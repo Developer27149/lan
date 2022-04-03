@@ -170,6 +170,10 @@ const imgQualityRiseCompare = (a: imgQualityType, b: imgQualityType) => {
   return false;
 };
 
+const isUHDScreen = () => window.innerWidth * window.devicePixelRatio > 1920;
+
+const isEmptyObj = (obj: Object) => Object.keys(obj).length === 0;
+
 export {
   keyword2site,
   getWallpaperBase64,
@@ -185,4 +189,6 @@ export {
   getImgBase64FromUrl,
   historyPush,
   imgQualityRiseCompare,
+  isUHDScreen,
+  isEmptyObj,
 };
