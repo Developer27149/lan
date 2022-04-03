@@ -1,4 +1,4 @@
-import "../style/ContentMenu.sass";
+import "../style/contentMenu.sass";
 
 interface IProps {
   options: {
