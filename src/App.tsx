@@ -6,7 +6,7 @@ import ModifyWallpaperBtn from "./components/ModifyWallpaperBtn";
 import { storageDataType } from "./types/index";
 import { useEffect, useState } from "react";
 import { configState } from "./recoilRoot";
-import { getConfigFromStorage, saveConfigToStorage } from "./utils/storage";
+import { saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
 import { updateRootStateWithKeyAndValue } from "./utils/index.js";
 
@@ -20,12 +20,9 @@ export default function App(props: { config: storageDataType }) {
     setConfig(config);
     updateRootStateWithKeyAndValue(setConfig, "showAddIconBox", false);
     setIsRender(true);
-    // init debug api
-    // globalThis.conf = () => {
-    //   getConfigFromStorage().then((res) => {
-    //     console.log(res.publicObject);
-    //   });
-    // };
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
   }, []);
   useEffect(() => {
     if (state?.publicObject) {
