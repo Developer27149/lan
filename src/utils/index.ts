@@ -64,8 +64,6 @@ const getWallpaperBase64FromUrl = async (
       });
     }
     const blob = new Blob(chunks as BlobPart[]);
-    // (async () => {})();
-    // const blob = await res.blob();
     return blobToBase64(blob);
   } catch (error) {
     console.log(error);
@@ -81,6 +79,7 @@ const handleDownloadCurWallpaper = (config: storageDataType) => {
       config.publicObject.currentWallpaperQuality === "raw"
         ? config.publicObject.wallpaperBase64
         : config.publicObject.imageUrls.raw,
+    filename: `岚-${config.publicObject.imgQuality}-${~~(Math.random() * 10000)}.jpeg`,
   });
 };
 

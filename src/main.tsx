@@ -6,6 +6,7 @@ import "./style/global.sass";
 import { getConfigFromStorage } from "./utils/storage";
 
 getConfigFromStorage().then((config) => {
+  console.log(config);
   ReactDOM.render(
     <React.StrictMode>
       <RecoilRoot>
