@@ -4,7 +4,10 @@
 
 ## 截图
 
-![1](./sources/1.jpg)
+![1](./sources/1.png)
+![3](./sources/4.png)
+![2](./sources/2.png)
+![3](./sources/3.png)
 
 ## 功能说明
 
