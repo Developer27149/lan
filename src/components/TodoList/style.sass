@@ -1,0 +1,68 @@
+.todo-box
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  display: flex
+  justify-content: center
+  align-items: center
+  .todo-container
+    width: min(90vw, 960px)
+    height: min(50vh, 800px)
+    background: white
+    padding: 1rem
+    border-radius: 12px
+    display: flex
+    .left-aside
+      width: 10rem
+      height: 100%
+      padding-right: 1rem
+      img 
+        display: block
+        margin: 1rem auto
+      h4
+        text-align: center
+
+      display: flex
+      flex-direction: column
+
+
+    .right-aside
+      flex-grow: 1
+      height: 100%
+      background: orange
+      border-radius: 8px
+      .right-aside-header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 1rem
+
+.tab-items
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  justify-content: end
+
+  .tab-item
+    cursor: pointer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    font-weight: bolder
+    font-size: 1.1rem
+    margin: 1rem 0
+    padding: 1rem
+  .tab-item-li
+    display: flex
+    gap: 4px
+    align-items: center
+
+.tab-tag
+  color: white
+  display: inline-block
+  height: 1.5rem
+  line-height: 1.5rem
+  border-radius: 1.5rem
+  padding: 0 0.5rem

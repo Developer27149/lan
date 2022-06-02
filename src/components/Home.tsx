@@ -10,6 +10,7 @@ import {
 } from "../utils/index.js";
 import BingWallpaperBox from "./BingWallpaper";
 import { bingComponentState } from "../bingWallpaperState";
+import { debounce } from "lodash";
 
 export default function Home() {
   const [config, setConfig] = useRecoilState(configState);
@@ -50,11 +51,14 @@ export default function Home() {
   }, [wallpaperBase64, imgQuality]);
 
   useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.metaKey && e.key === ".") {
-        setBingState((oldState) => ({ ...oldState, show: !oldState.show }));
-      }
-    });
+    document.addEventListener(
+      "keydown",
+      debounce((e) => {
+        if ((e.metaKey || e.altKey) && e.key === ".") {
+          setBingState((oldState) => ({ ...oldState, show: !oldState.show }));
+        }
+      }, 300)
+    );
   }, []);
 
   return (

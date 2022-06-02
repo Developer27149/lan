@@ -9,6 +9,7 @@ import { configState } from "./recoilRoot";
 import { saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
 import { updateRootStateWithKeyAndValue } from "./utils/index.js";
+import TodoList from "./components/TodoList";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
@@ -29,6 +30,15 @@ export default function App(props: { config: storageDataType }) {
       saveConfigToStorage(state);
     }
   }, [state]);
+  // useEffect(() => {
+  //   document.addEventListener("keydown", (e) => {
+  //     console.log(e, e.altKey, " from app component");
+
+  //     // if ((e.metaKey || e.altKey) && e.key === ".") {
+  //     //   setBingState((oldState) => ({ ...oldState, show: !oldState.show }));
+  //     // }
+  //   });
+  // }, []);
   if (!isRender) return null;
   return (
     <>
@@ -39,6 +49,7 @@ export default function App(props: { config: storageDataType }) {
           <Menu />
           <Clock />
           <BookmarkContainer />
+          <TodoList />
         </>
       ) : null}
     </>
