@@ -10,6 +10,8 @@ import { saveConfigToStorage } from "./utils/storage";
 import BookmarkContainer from "./components/BookmarkContainer";
 import { updateRootStateWithKeyAndValue } from "./utils/index.js";
 import TodoList from "./components/TodoList";
+import { ConfigProvider } from "antd";
+import zhCN from "antd/lib/locale/zh_CN";
 
 export default function App(props: { config: storageDataType }) {
   const { config } = props;
@@ -41,7 +43,7 @@ export default function App(props: { config: storageDataType }) {
   // }, []);
   if (!isRender) return null;
   return (
-    <>
+    <ConfigProvider locale={zhCN}>
       <Home />
       {state?.publicObject?.showClock === false ? (
         <>
@@ -52,6 +54,6 @@ export default function App(props: { config: storageDataType }) {
           <TodoList />
         </>
       ) : null}
-    </>
+    </ConfigProvider>
   );
 }

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { random } from "lodash";
 import dayjs from "dayjs";
 
 import {
@@ -25,7 +25,7 @@ const keyword2site = {
 
 const colors = ["#0f95b0", "#2c9678", "#fb8b05", "#2e317c"];
 const getRandomColor = () => {
-  return colors[_.random(colors.length - 1)];
+  return colors[random(colors.length - 1)];
 };
 
 function blobToBase64(blob: Blob): Promise<string> {

@@ -7,8 +7,10 @@
   display: flex
   justify-content: center
   align-items: center
+  *
+    user-select: none
   .todo-container
-    width: min(90vw, 960px)
+    width: min(90vw, 1260px)
     height: min(50vh, 800px)
     background: white
     padding: 1rem
@@ -18,6 +20,7 @@
       width: 10rem
       height: 100%
       padding-right: 1rem
+      overflow: hidden
       img 
         display: block
         margin: 1rem auto
@@ -27,17 +30,12 @@
       display: flex
       flex-direction: column
 
-
     .right-aside
       flex-grow: 1
       height: 100%
-      background: orange
-      border-radius: 8px
-      .right-aside-header
-        display: flex
-        justify-content: space-between
-        align-items: center
-        padding: 1rem
+      background: #e4cbcb3f
+      display: flex
+      flex-direction: column
 
 .tab-items
   flex-grow: 1
@@ -53,7 +51,6 @@
     font-weight: bolder
     font-size: 1.1rem
     margin: 1rem 0
-    padding: 1rem
   .tab-item-li
     display: flex
     gap: 4px
@@ -66,3 +63,24 @@
   line-height: 1.5rem
   border-radius: 1.5rem
   padding: 0 0.5rem
+
+.new-todo-box
+  border-radius: 6px
+  padding: 12px
+  display: flex
+  align-items: center
+  .item-input
+    flex-grow: 1
+    display: flex
+    align-items: center
+    
+  .todo-option
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 4px
+    font-size: 1.2rem
+    margin: 0 0 0 12px
+.todo-content
+  flex-grow: 1
+  margin: 0.5em

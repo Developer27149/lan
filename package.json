@@ -9,8 +9,9 @@
   },
   "dependencies": {
     "@shihengtech/hooks": "^0.0.16",
+    "antd": "^4.20.7",
     "classnames": "^2.3.1",
-    "dayjs": "^1.11.0",
+    "dayjs": "^1.11.2",
     "react": "17",
     "react-dom": "17",
     "react-tooltip": "^4.2.21",
