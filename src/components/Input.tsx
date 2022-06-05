@@ -43,7 +43,7 @@ export default function Input({
           <div
             style={{
               position: "absolute",
-              left: ".3rem",
+              left: ".4rem",
               top: "11px",
             }}
           >
@@ -54,8 +54,8 @@ export default function Input({
           {...rest}
           className={cx("custom-input", className)}
           style={{
-            paddingLeft: leftIcon ? "1.2rem" : "auto",
-            paddingRight: rightIcon ? "1.2rem" : "auto",
+            paddingLeft: leftIcon ? "1.3rem" : "auto",
+            paddingRight: rightIcon ? "1.3rem" : "auto",
             ...style,
           }}
           value={value}
@@ -65,7 +65,7 @@ export default function Input({
           <div
             style={{
               position: "absolute",
-              right: ".3rem",
+              right: ".4rem",
               top: "11px",
             }}
           >

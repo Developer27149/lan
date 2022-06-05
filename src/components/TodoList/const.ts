@@ -10,6 +10,11 @@ export enum ETodoStatus {
   搞定,
 }
 
+export interface IComment {
+  createdAt: number;
+  content: string;
+}
+
 export interface ITodoItem {
   title: string;
   content: string;
@@ -17,7 +22,7 @@ export interface ITodoItem {
   status: ETodoStatus;
   dateRange: [number, number];
   time: string;
-  comments: string[];
+  comments: IComment[];
   createdAt: number;
   id: number;
 }
@@ -25,3 +30,4 @@ export interface ITodoItem {
 export const tagColor = "#8e42d3";
 
 export const todoDayDateFormatStr = "DD/MM/YYYY";
+export const fullDateStr = todoDayDateFormatStr + " HH:mm:ss";

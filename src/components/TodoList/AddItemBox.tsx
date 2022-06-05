@@ -11,28 +11,38 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { IoIosArrowBack } from "react-icons/io";
-import { ETodoStatus, ITodoItem } from "./const";
+import { AiOutlineEnter, AiOutlineDelete } from "react-icons/ai";
+import { ETodoStatus, ITodoItem, fullDateStr, IComment } from "./const";
 import { useSetRecoilState } from "recoil";
-import { todoListState } from "./status.js";
+import { todoListState } from "./status";
+import { MacScrollbar } from "mac-scrollbar";
 
 const { useForm, Item } = Form;
 
 interface IProps {
   setIsAdding: Dispatch<SetStateAction<boolean>>;
+  initV?: ITodoItem;
+  setInitV?: Dispatch<SetStateAction<ITodoItem | undefined>>;
 }
 
-export default function AddItemBox({ setIsAdding }: IProps) {
+export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
   const setTodoList = useSetRecoilState(todoListState);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(initV?.title ?? "");
+  const [content, setContent] = useState(initV?.content ?? "");
+  const [newComment, setNewComment] = useState("");
+  const [comments, setComments] = useState<IComment[]>(initV?.comments ?? []);
+
   const [form] = useForm();
   const initValues = {
-    dateRange: [dayjs(), dayjs()],
-    isImportant: false,
-    time: dayjs(),
+    dateRange: initV ? initV.dateRange.map((i) => dayjs(i)) : [dayjs(), dayjs()],
+    isImportant: initV?.isImportant ?? false,
+    time: dayjs(initV?.createdAt) ?? dayjs(),
   };
 
-  const onBack = () => setIsAdding(false);
+  const onBack = () => {
+    setInitV?.(undefined);
+    setIsAdding(false);
+  };
 
   const onFinish = (values: typeof initValues) => {
     if (title.length === 0) {
@@ -54,12 +64,23 @@ export default function AddItemBox({ setIsAdding }: IProps) {
       content,
       status: ETodoStatus.计划,
       id: createdAt,
-      comments: [],
+      comments,
     };
-    setTodoList((todos) => {
-      return [...todos, todoItem];
-    });
-    message.success("创建好了 🎉");
+    if (initV) {
+      console.log("update");
+
+      setTodoList((todos) => {
+        return [todoItem, ...todos.filter((i) => i.id !== initV.id)];
+      });
+    } else {
+      console.log("create");
+
+      setTodoList((todos) => {
+        return [todoItem, ...todos];
+      });
+    }
+
+    message.success("OK 🎉🎉🎉");
     onBack();
   };
 
@@ -83,7 +104,8 @@ export default function AddItemBox({ setIsAdding }: IProps) {
               setValue={setTitle}
               label="标题"
               style={{ width: "calc(100% - 100px)" }}
-              placeholder="干啥啊？"
+              placeholder="简洁的标题 🎈"
+              maxLength={8}
             />
           </div>
         </div>
@@ -100,7 +122,7 @@ export default function AddItemBox({ setIsAdding }: IProps) {
             </Item>
             <Item>
               <Button htmlType="submit" type="dashed" shape="round">
-                创建
+                {initV ? "编辑" : "创建"}
               </Button>
             </Item>
           </Form>
@@ -111,11 +133,88 @@ export default function AddItemBox({ setIsAdding }: IProps) {
           style={{
             height: "100%",
             resize: "none",
+            border: "none",
+            outline: "none",
           }}
           placeholder="balabala...我还支持 Markdown 语法格式"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
+        <MacScrollbar
+          style={{
+            display: "flex",
+            height: "100%",
+            flexDirection: "column",
+            flexGrow: 1,
+            paddingRight: "1rem",
+          }}
+        >
+          {/* 旧数据 */}
+          <div style={{ flexGrow: 1 }}>
+            <div>
+              {comments.map((item) => (
+                <div
+                  key={item.createdAt}
+                  style={{
+                    padding: "0.5rem",
+                    marginBottom: "0.5rem",
+                    background: "#fff",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBottom: "0.5rem",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        border: "none",
+                        borderRadius: "3px",
+                        background: "#291cfa24",
+                        padding: "4px",
+                        fontSize: "0.5rem",
+                      }}
+                    >
+                      {dayjs(item.createdAt).format(fullDateStr)}:
+                    </span>
+
+                    <span
+                      className="opacity"
+                      onClick={() => {
+                        setComments((i) => i.filter((j) => j.createdAt !== item.createdAt));
+                      }}
+                    >
+                      <AiOutlineDelete
+                        style={{ opacity: "0.4", fontSize: "0.7rem", cursor: "pointer" }}
+                      />
+                    </span>
+                  </div>
+                  <div className="select" style={{ wordBreak: "break-all" }}>
+                    {item.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* 添加评注 */}
+          <Input
+            value={newComment}
+            setValue={setNewComment}
+            placeholder="备注？ 🦒"
+            rightIcon={<AiOutlineEnter />}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && newComment.trim().length > 0) {
+                setComments((i) =>
+                  i.concat({ content: newComment, createdAt: dayjs().valueOf() })
+                );
+                setNewComment("");
+              }
+            }}
+          />
+        </MacScrollbar>
       </div>
     </>
   );
