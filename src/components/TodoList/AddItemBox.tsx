@@ -84,16 +84,6 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
     onBack();
   };
 
-  const [vd, setVd] = React.useState<Vditor>();
-  useEffect(() => {
-    const vditor = new Vditor("vditor", {
-      after: () => {
-        vditor.setValue("`Vditor` 最小代码示例");
-        setVd(vditor);
-      },
-    });
-  }, []);
-
   return (
     <>
       <div className="new-todo-box">
@@ -140,7 +130,7 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
       </div>
       <div className="todo-content">
         <MacScrollbar>
-          {/* <InputText.TextArea
+          <InputText.TextArea
             style={{
               minHeight: "100%",
               resize: "none",
@@ -148,10 +138,10 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
               outline: "none",
               overflow: "hidden",
             }}
-            placeholder="balabala...我还支持 Markdown 语法格式"
+            placeholder="balabala..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
-          /> */}
+          />
         </MacScrollbar>
         <MacScrollbar
           style={{

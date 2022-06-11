@@ -2,8 +2,8 @@
   "name": "lan",
   "version": "0.0.0",
   "scripts": {
-    "dev": "export DEV=dev && tsc && vite build",
-    "build": "rm -rf dist && tsc && vite build && uglifyjs dist/bg.js -o dist/bg.js",
+    "dev": "tsc && cross-env DEV='dev' vite build",
+    "build": "rimraf dist && tsc && vite build && uglifyjs dist/bg.js -o dist/bg.js",
     "preview": "vite preview",
     "lint": "eslint src/**/*.{tsx,ts}"
   },
@@ -28,6 +28,7 @@
     "@typescript-eslint/parser": "^5.17.0",
     "@vitejs/plugin-react": "^1.0.7",
     "commitlint": "^16.2.3",
+    "cross-env": "^7.0.3",
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.28.0",
@@ -36,6 +37,7 @@
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
     "react-icons": "^4.3.1",
+    "rimraf": "^3.0.2",
     "sass": "^1.48.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-sass-guidelines": "^9.0.1",
