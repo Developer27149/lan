@@ -8,13 +8,19 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useRecoilState } from "recoil";
 import { todoListState } from "./status";
 import Input from "../Input";
-import { ETodoStatus, ITodoItem } from "./const";
+import { ETodoStatus, ITodoItem, TSetType } from "./const";
+import Render from "./Render";
 
-export default function RightAside() {
-  const [isAdding, setIsAdding] = useState(true);
+interface IProps {
+  isAdding: boolean;
+  setIsAdding: TSetType<boolean>;
+}
+
+export default function RightAside({ isAdding, setIsAdding }: IProps) {
   const [value, setValue] = useState("");
   const [initV, setInitV] = useState<ITodoItem | undefined>();
   const [todoList, setTodoList] = useRecoilState(todoListState);
+  const [renderItem, setRenderItem] = useState<ITodoItem | undefined>();
 
   const onReverseIsFinish = (todo: ITodoItem) =>
     setTodoList((item) =>
@@ -45,6 +51,7 @@ export default function RightAside() {
               justifyContent: "space-between",
               alignItems: "center",
               margin: "1rem",
+              position: "relative",
             }}
           >
             <Input
@@ -53,7 +60,7 @@ export default function RightAside() {
               setValue={setValue}
               rightIcon={<BiSearch />}
             />
-            <Button type="link" icon={"🤣"} onClick={setIsAdding.bind(undefined, true)}>
+            <Button type="link" icon={"🤣"} onClick={() => setIsAdding(true)}>
               NEW
             </Button>
           </div>
@@ -151,13 +158,23 @@ export default function RightAside() {
                         }}
                       />
                     </div>
-                    <span style={{ opacity: "0.8" }}>{todo.time} 👀</span>
+                    <span style={{ opacity: "0.3" }}>{todo.time}</span>
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // 显示预览
+                        setRenderItem(todo);
+                      }}
+                    >
+                      👀
+                    </span>
                   </div>
                 </div>
               ))}
           </div>
         </>
       )}
+      <Render item={renderItem} onExit={() => setRenderItem(undefined)} />
     </div>
   );
 }

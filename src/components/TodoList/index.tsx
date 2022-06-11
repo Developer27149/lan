@@ -8,13 +8,13 @@ import RightAside from "./RightAside";
 import { todoListState } from "./status";
 import "./style.sass";
 import "antd/dist/antd.css";
-import { ITodoItem } from "./const.js";
 
 export default function TodoList() {
   // get config from localstorage and init all data!
   const [isLoading, setIsLoading] = useState(true);
   const [, setConfig] = useRecoilState(configState);
   const [todoList, setTodoList] = useRecoilState(todoListState);
+  const [isAdding, setIsAddin] = useState(true);
 
   // 隐藏搜索框
   useEffect(() => {
@@ -45,8 +45,8 @@ export default function TodoList() {
   return (
     <div className="todo-box">
       <div className="todo-container">
-        <LeftAside />
-        <RightAside />
+        <LeftAside isAdding={isAdding} setIsAdding={setIsAddin} />
+        <RightAside isAdding={isAdding} setIsAdding={setIsAddin} />
       </div>
     </div>
   );

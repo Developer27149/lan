@@ -1,11 +1,12 @@
-import { Dispatch, HTMLProps, ReactNode } from "react";
+import { HTMLProps, ReactNode } from "react";
 import "../style/input.sass";
 import cx from "classnames";
+import { TSetType } from "./TodoList/const.js";
 
 interface IProps extends HTMLProps<HTMLInputElement> {
   label?: string;
   value: string;
-  setValue: Dispatch<React.SetStateAction<string>>;
+  setValue: TSetType<string>;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 }

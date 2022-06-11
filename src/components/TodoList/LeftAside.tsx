@@ -1,11 +1,16 @@
 import dayjs from "dayjs";
 import { FcTodoList, FcAlarmClock, FcAreaChart } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ETabs, ITodoItem, todoDayDateFormatStr } from "./const";
+import { ETabs, ITodoItem, todoDayDateFormatStr, TSetType } from "./const";
 import { todoListState, todoPath } from "./status";
 import Tag from "./Tag";
 
-export default function LeftAside() {
+interface IProps {
+  isAdding: boolean;
+  setIsAdding: TSetType<boolean>;
+}
+
+export default function LeftAside({ setIsAdding }: IProps) {
   const [path, setPath] = useRecoilState(todoPath);
   const todoItems = useRecoilValue(todoListState);
   const items = [
@@ -33,13 +38,17 @@ export default function LeftAside() {
       getCount: (items: ITodoItem[]) => items.length,
     },
   ];
+  const handleSwithPath = (key: ETabs) => {
+    setIsAdding(false);
+    setPath(key);
+  };
   return (
     <aside className="left-aside">
       <img src="/icons/64.png" alt="avatar" />
       <h4>Todo List</h4>
       <div className="tab-items">
         {items.map(({ name, key, icon, getCount }) => (
-          <section className="tab-item" key={key} onClick={() => setPath(key)}>
+          <section className="tab-item" key={key} onClick={() => handleSwithPath(key)}>
             <div className="tab-item-li">
               {icon}
               <span>{name}</span>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import Input from "../Input";
 import {
   Form,
@@ -12,7 +12,7 @@ import {
 import dayjs from "dayjs";
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineEnter, AiOutlineDelete } from "react-icons/ai";
-import { ETodoStatus, ITodoItem, fullDateStr, IComment } from "./const";
+import { ETodoStatus, ITodoItem, fullDateStr, IComment, TSetType } from "./const";
 import { useSetRecoilState } from "recoil";
 import { todoListState } from "./status";
 import { MacScrollbar } from "mac-scrollbar";
@@ -20,9 +20,9 @@ import { MacScrollbar } from "mac-scrollbar";
 const { useForm, Item } = Form;
 
 interface IProps {
-  setIsAdding: Dispatch<SetStateAction<boolean>>;
+  setIsAdding: TSetType<boolean>;
   initV?: ITodoItem;
-  setInitV?: Dispatch<SetStateAction<ITodoItem | undefined>>;
+  setInitV?: TSetType<ITodoItem | undefined>;
 }
 
 export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
@@ -84,6 +84,16 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
     onBack();
   };
 
+  const [vd, setVd] = React.useState<Vditor>();
+  useEffect(() => {
+    const vditor = new Vditor("vditor", {
+      after: () => {
+        vditor.setValue("`Vditor` 最小代码示例");
+        setVd(vditor);
+      },
+    });
+  }, []);
+
   return (
     <>
       <div className="new-todo-box">
@@ -122,24 +132,27 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
             </Item>
             <Item>
               <Button htmlType="submit" type="dashed" shape="round">
-                {initV ? "编辑" : "创建"}
+                {initV ? "保存" : "创建"}
               </Button>
             </Item>
           </Form>
         </div>
       </div>
       <div className="todo-content">
-        <InputText.TextArea
-          style={{
-            height: "100%",
-            resize: "none",
-            border: "none",
-            outline: "none",
-          }}
-          placeholder="balabala...我还支持 Markdown 语法格式"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <MacScrollbar>
+          {/* <InputText.TextArea
+            style={{
+              minHeight: "100%",
+              resize: "none",
+              border: "none",
+              outline: "none",
+              overflow: "hidden",
+            }}
+            placeholder="balabala...我还支持 Markdown 语法格式"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          /> */}
+        </MacScrollbar>
         <MacScrollbar
           style={{
             display: "flex",

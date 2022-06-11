@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export enum ETabs {
   今日,
   重要,
@@ -26,7 +28,7 @@ export interface ITodoItem {
   createdAt: number;
   id: number;
 }
-
+export type TSetType<T> = Dispatch<SetStateAction<T>>;
 export const tagColor = "#8e42d3";
 
 export const todoDayDateFormatStr = "DD/MM/YYYY";
