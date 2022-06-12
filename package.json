@@ -15,8 +15,10 @@
     "mac-scrollbar": "^0.10.1",
     "react": "17",
     "react-dom": "17",
+    "react-markdown": "^8.0.3",
     "react-tooltip": "^4.2.21",
-    "recoil": "^0.6.1"
+    "recoil": "^0.6.1",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.176",

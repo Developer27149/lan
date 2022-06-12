@@ -36,6 +36,7 @@
       background: #f5f5f5
       display: flex
       flex-direction: column
+      position: relative
 
 .tab-items
   flex-grow: 1
@@ -100,4 +101,16 @@
   right: 0
   bottom: 0
   top: 0
-  background-color: orange
+  background-color: ghostwhite
+  padding: 1rem
+  .render-content
+    padding: 1rem
+  .render-title
+    text-align: center
+    padding: 1rem
+
+.item-icon
+  transform: scale(0.8)
+  transition: all 0.4s ease-in-out
+  &:hover
+    transform: scale(1)

@@ -49,10 +49,10 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
       message.warning("不如写一个有用的标题吧 👀");
       return;
     }
-    if (content.length === 0) {
-      message.warning("具体干点啥也补充一下吧 👀");
-      return;
-    }
+    // if (content.length === 0) {
+    //   message.warning("具体干点啥也补充一下吧 👀");
+    //   return;
+    // }
     const { dateRange, isImportant, time } = values;
     const createdAt = dayjs().valueOf();
     const todoItem: ITodoItem = {
@@ -105,7 +105,7 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
               label="标题"
               style={{ width: "calc(100% - 100px)" }}
               placeholder="简洁的标题 🎈"
-              maxLength={8}
+              maxLength={16}
             />
           </div>
         </div>
@@ -162,6 +162,8 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
                     padding: "0.5rem",
                     marginBottom: "0.5rem",
                     background: "#fff",
+                    borderRadius: "4px",
+                    paddingBottom: "0.75rem",
                   }}
                 >
                   <div
@@ -181,7 +183,7 @@ export default function AddItemBox({ setIsAdding, initV, setInitV }: IProps) {
                         fontSize: "0.5rem",
                       }}
                     >
-                      {dayjs(item.createdAt).format(fullDateStr)}:
+                      {dayjs(item.createdAt).format(fullDateStr)}
                     </span>
 
                     <span

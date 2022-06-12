@@ -5,11 +5,14 @@ import { BiSearch, BiEdit } from "react-icons/bi";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { FcAlarmClock } from "react-icons/fc";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { useRecoilState } from "recoil";
-import { todoListState } from "./status";
+import { CgEye } from "react-icons/cg";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { todoListState, todoPath } from "./status";
 import Input from "../Input";
-import { ETodoStatus, ITodoItem, TSetType } from "./const";
+import { ETabs, ETodoStatus, ITodoItem, todoDayDateFormatStr, TSetType } from "./const";
 import Render from "./Render";
+import { MacScrollbar } from "mac-scrollbar";
+import dayjs from "dayjs";
 
 interface IProps {
   isAdding: boolean;
@@ -21,7 +24,7 @@ export default function RightAside({ isAdding, setIsAdding }: IProps) {
   const [initV, setInitV] = useState<ITodoItem | undefined>();
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const [renderItem, setRenderItem] = useState<ITodoItem | undefined>();
-
+  const path = useRecoilValue(todoPath);
   const onReverseIsFinish = (todo: ITodoItem) =>
     setTodoList((item) =>
       item.map((i) => {
@@ -64,114 +67,99 @@ export default function RightAside({ isAdding, setIsAdding }: IProps) {
               NEW
             </Button>
           </div>
-          <div
-            style={{
-              display: "grid",
-              flexGrow: 1,
-              padding: "1rem",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "1rem",
-            }}
-          >
-            {todoList
-              .filter((i) => i.content.includes(value) || i.title.includes(value))
-              .map((todo) => (
-                <div
-                  key={todo.id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    maxHeight: "200px",
-                    borderTop: `6px solid ${
-                      todo.status === ETodoStatus.搞定 ? "#52c41a91" : "#8e7eff5c"
-                    }`,
-                    borderRadius: "6px",
-                    padding: "0.5rem 1rem",
-                    background: "#fff",
-                    wordBreak: "break-all",
-                    overflow: "hidden",
-                    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-                  }}
-                >
+          <MacScrollbar>
+            <div
+              style={{
+                display: "grid",
+                padding: "1rem",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "1rem",
+              }}
+            >
+              {todoList
+                .filter((i) => i.content.includes(value) || i.title.includes(value))
+                .filter((i) => {
+                  const day = dayjs(i.createdAt);
+                  if (
+                    (path === ETabs.今日 &&
+                      day.format(todoDayDateFormatStr) !==
+                        dayjs().format(todoDayDateFormatStr)) ||
+                    i.status !== ETodoStatus.搞定
+                  ) {
+                    return false;
+                  }
+                  if (path === ETabs.重要 && !i.isImportant) return false;
+                  return true;
+                })
+                .map((todo) => (
                   <div
-                    style={{ display: "flex", alignItems: "center", marginBottom: "0.5rem" }}
+                    key={todo.id}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      borderLeft: `6px solid ${
+                        todo.status === ETodoStatus.搞定 ? "#52c41a91" : "#8e7eff5c"
+                      }`,
+                      borderRadius: "6px",
+                      padding: "0.5rem 1rem",
+                      background: "#fff",
+                      wordBreak: "break-all",
+                      boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+                    }}
                   >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <h2 style={{ marginBottom: 0 }}>{todo.title}</h2>
-                    </div>
+                    <div style={{ marginBottom: 0 }}>{todo.title}</div>
                     <div
                       style={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        marginLeft: "auto",
-                        cursor: "pointer",
-                        fontWeight: "1.2rem",
+                        justifyContent: "space-between",
+                        paddingTop: "0.5rem",
                       }}
                     >
-                      <IoCheckmarkDoneCircleOutline
-                        style={{
-                          color: todo.status === ETodoStatus.搞定 ? "green" : "#333",
-                          opacity: todo.status === ETodoStatus.搞定 ? "1" : "0.35",
-                          fontSize: "1.4rem",
-                        }}
-                        onClick={() => onReverseIsFinish(todo)}
-                      />
-                      <FcAlarmClock
-                        style={{
-                          filter: `grayscale(${todo.isImportant ? 0 : 1})`,
-                          opacity: todo.isImportant ? "1" : "0.35",
-                          fontSize: "1.4rem",
-                        }}
-                        onClick={() => onReverseIsImportant(todo)}
-                      />
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <BiEdit
+                          onClick={() => {
+                            setInitV(todo);
+                            setIsAdding(true);
+                          }}
+                          className="item-icon"
+                        />
+                        <MdOutlineDeleteOutline
+                          className="item-icon"
+                          onClick={() => {
+                            setTodoList((todos) => todos.filter((i) => i.id !== todo.id));
+                          }}
+                        />
+                        <IoCheckmarkDoneCircleOutline
+                          className="item-icon"
+                          style={{
+                            color: todo.status === ETodoStatus.搞定 ? "green" : "#333",
+                            opacity: todo.status === ETodoStatus.搞定 ? "1" : "0.35",
+                          }}
+                          onClick={() => onReverseIsFinish(todo)}
+                        />
+                        <FcAlarmClock
+                          className="item-icon"
+                          style={{
+                            filter: `grayscale(${todo.isImportant ? 0 : 1})`,
+                            opacity: todo.isImportant ? "1" : "0.35",
+                          }}
+                          onClick={() => onReverseIsImportant(todo)}
+                        />
+                        <CgEye
+                          className="item-icon"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            // 显示预览
+                            setRenderItem(todo);
+                          }}
+                        />
+                      </div>
+                      <span style={{ opacity: "0.3" }}>{todo.time}</span>
                     </div>
                   </div>
-                  {/* 主要内容 */}
-                  <div
-                    style={{
-                      flexGrow: 1,
-                      overflow: "hidden",
-                    }}
-                    className="select"
-                  >
-                    {todo.content.slice(0, 32)}
-                    {todo.content.length > 32 ? "..." : ""}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      paddingTop: "0.5rem",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <BiEdit
-                        onClick={() => {
-                          setInitV(todo);
-                          setIsAdding(true);
-                        }}
-                      />
-                      <MdOutlineDeleteOutline
-                        onClick={() => {
-                          setTodoList((todos) => todos.filter((i) => i.id !== todo.id));
-                        }}
-                      />
-                    </div>
-                    <span style={{ opacity: "0.3" }}>{todo.time}</span>
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        // 显示预览
-                        setRenderItem(todo);
-                      }}
-                    >
-                      👀
-                    </span>
-                  </div>
-                </div>
-              ))}
-          </div>
+                ))}
+            </div>
+          </MacScrollbar>
         </>
       )}
       <Render item={renderItem} onExit={() => setRenderItem(undefined)} />

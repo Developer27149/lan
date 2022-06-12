@@ -31,5 +31,5 @@ export interface ITodoItem {
 export type TSetType<T> = Dispatch<SetStateAction<T>>;
 export const tagColor = "#8e42d3";
 
-export const todoDayDateFormatStr = "DD/MM/YYYY";
-export const fullDateStr = todoDayDateFormatStr + " HH:mm:ss";
+export const todoDayDateFormatStr = "YYYY-MM-DD";
+export const fullDateStr = todoDayDateFormatStr + " HH:mm";

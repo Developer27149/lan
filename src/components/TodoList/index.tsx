@@ -14,7 +14,7 @@ export default function TodoList() {
   const [isLoading, setIsLoading] = useState(true);
   const [, setConfig] = useRecoilState(configState);
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const [isAdding, setIsAddin] = useState(true);
+  const [isAdding, setIsAdding] = useState(true);
 
   // 隐藏搜索框
   useEffect(() => {
@@ -45,8 +45,8 @@ export default function TodoList() {
   return (
     <div className="todo-box">
       <div className="todo-container">
-        <LeftAside isAdding={isAdding} setIsAdding={setIsAddin} />
-        <RightAside isAdding={isAdding} setIsAdding={setIsAddin} />
+        <LeftAside isAdding={isAdding} setIsAdding={setIsAdding} />
+        <RightAside isAdding={isAdding} setIsAdding={setIsAdding} />
       </div>
     </div>
   );

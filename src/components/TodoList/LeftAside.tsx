@@ -15,7 +15,7 @@ export default function LeftAside({ setIsAdding }: IProps) {
   const todoItems = useRecoilValue(todoListState);
   const items = [
     {
-      name: "今日",
+      name: "今日待办",
       key: ETabs.今日,
       icon: <FcAreaChart />,
       getCount: (items: ITodoItem[]) =>
